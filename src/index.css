@@ -4,12 +4,10 @@
 
 @layer base {
   :root {
-    --primary: #194277;
-    --secondary: #ffba6e;
-    --tertiary: #abc8ed;
-    --floor: #f9f9f9;
-    --light: #ffffff;
-    --dark: #00000;
+    --primary: #75BF7A;
+    --secondary: #FFFFFF;
+    --tertiary: #F9F9F9;
+    --floor: #000000;
   }
 
   li,
