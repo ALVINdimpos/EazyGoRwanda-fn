@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className='bg-white shadow-lg bg-opacity-5'>
+    <header className='shadow-lg bg-secondary bg-opacity-5'>
       <div className='container flex items-center justify-between h-24 mx-auto'>
         <Link to='/' className='flex items-center justify-center'>
           <img className='h-16' src={Logo} alt='Logo' />
