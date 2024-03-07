@@ -1,10 +1,11 @@
-import { HomePage, NotFoundPage, UnAuthorizedPage } from '../pages';
+import { HomePage, NotFoundPage, UnAuthorizedPage, FindRidePage } from '../pages';
 
 // Public Routes
 const publicRoutes = [
   { path: '/', element: <HomePage /> },
   { path: '/unauthorized', element: <UnAuthorizedPage /> },
   { path: '*', element: <NotFoundPage /> },
+  { path: '/find-ride', element: <FindRidePage /> },
 ];
 
 // Protected Routes
