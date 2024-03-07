@@ -4,7 +4,7 @@ import React from 'react';
 import { Hero } from '../assets';
 import { Link } from 'react-router-dom';
 import { FaDownload } from 'react-icons/fa';
-import SearchNav from './Home/SearchNav';
+import SearchNav from './SearchNav';
 const HeroSection = () => {
   return (
     <section className=''>
