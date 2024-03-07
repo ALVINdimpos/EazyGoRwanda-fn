@@ -4,6 +4,7 @@ import React from 'react';
 import { Hero } from '../assets';
 import { Link } from 'react-router-dom';
 import { FaDownload } from 'react-icons/fa';
+import SearchNav from './Home/SearchNav';
 const HeroSection = () => {
   return (
     <section className=''>
@@ -43,8 +44,11 @@ const HeroSection = () => {
           </Link>
         </div>
         <div className='hidden lg:mt-0 lg:col-span-5 lg:flex'>
-          <img src={Hero} alt='mockup' className='h-[500px] ' />
+          <img src={Hero} alt='mockup' className='h-[350px] ' />
         </div>
+
+        {/*Search Navigation  */}
+        <SearchNav />
       </div>
     </section>
   );
