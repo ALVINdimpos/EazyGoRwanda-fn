@@ -2,14 +2,13 @@
 import React from 'react';
 import { Navbar } from '../components';
 import HeroSection from '../components/HeroSection';
-import SearchNav from '../components/Home/SearchNav';
-
+import Footer from './Footer';
 const Home = () => {
   return (
     <div>
       <Navbar />
       <HeroSection />
-      {/* <SearchNav /> */}
+      <Footer />
     </div>
   );
 };
