@@ -26,7 +26,7 @@ const Navbar = () => {
             </li>
             <li className='flex items-center p-5 space-x-2 xl:p-8'>
               <FaSearch />
-              <Link to='/'>Find a ride</Link>
+              <Link to='/find-ride'>Find a ride</Link>
             </li>
             <li className='flex items-center p-5 space-x-2 xl:p-8'>
               <FaPlusCircle className='text-2xl' />
