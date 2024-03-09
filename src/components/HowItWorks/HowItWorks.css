@@ -1,0 +1,70 @@
+.HowItWorks {
+  background-color: #f9f9f9;
+  display: block;
+  margin: 0 auto;
+  font-style: italic;
+  max-height: 100vh;
+}
+
+.HowItWorks h1 {
+  font-style: italic !important;
+}
+
+.HowItWorks p {
+  max-width: 55%;
+  display: block;
+  margin: 0 auto;
+  max-width: 32%;
+  font-style: italic !important;
+}
+
+.eazy-go {
+  color: #75bf7a;
+}
+
+.options {
+  white-space: nowrap;
+  font-style: italic !important;
+}
+
+.options span {
+  display: inline-block;
+}
+
+svg {
+  width: 40px;
+  height: auto;
+  padding-bottom: 10px;
+}
+
+.first-container {
+  text-align: right;
+}
+
+.phone-icon {
+  padding: 120px;
+}
+
+.first-svg,
+.third-svg {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.second-svg {
+  padding-bottom: 45px;
+}
+
+.third-svg,
+.fourth-svg {
+  padding-top: 30px;
+}
+
+.first-container,
+.second-container {
+  width: 14%;
+}
+
+.post-a-ride {
+  padding-bottom: 20px;
+}
