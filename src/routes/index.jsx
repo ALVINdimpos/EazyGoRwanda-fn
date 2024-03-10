@@ -1,4 +1,4 @@
-import HowItWorks from '../components/HowItWorks/HowItWorks';
+import HowItWorks from '../components/HowItWorksSection/HowItWorks';
 import { HomePage, NotFoundPage, UnAuthorizedPage, FindRidePage, TravelPage } from '../pages';
 
 // Public Routes
