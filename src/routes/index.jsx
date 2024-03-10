@@ -4,7 +4,7 @@ import { HomePage, NotFoundPage, UnAuthorizedPage, FindRidePage, TravelPage } fr
 // Public Routes
 const publicRoutes = [
   { path: '/', element: <HomePage /> },
-  { path: 'how-it-works', element: <HowItWorks /> },
+  { path: '/how-it-works', element: <HowItWorks /> },
   { path: '/unauthorized', element: <UnAuthorizedPage /> },
   { path: '*', element: <NotFoundPage /> },
   { path: '/find-ride', element: <FindRidePage /> },
