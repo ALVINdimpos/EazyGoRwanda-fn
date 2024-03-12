@@ -1,46 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FourthStep, HowItWork, SecondStep, ThirdStep } from '../../assets';
 import { FirstStep } from '../../assets';
-import Navbar from '../Navbar';
-import Footer from '../../containers/Footer';
 import './HowItWorks.css';
 
 export default function HowItWorks() {
+  const [active, setActive] = useState(0);
+
+  function handleClick(index) {
+    setActive(index);
+  }
+
+  const tabsOptions = [
+    {
+      title: 'For Passenger',
+      link: '/',
+    },
+    {
+      title: 'For a Driver',
+      link: '/driver',
+    },
+    {
+      title: 'Trust & Safety',
+      link: '/trust-safety',
+    },
+    {
+      title: 'Sustainability',
+      link: '/sustainability',
+    },
+  ];
+
   return (
     <div className='min-h-screen '>
-      <Navbar />
       <div className='HowItWorks pt-10'>
         <h1 className='uppercase text-2xl font-semibold text-center pb-6'>
           How <span className='eazy-go'>EazyGo</span> Works
         </h1>
-        <p className='text-gray-800 text-lg text-center pb-12'>
+        <p className='max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400 text-center pb-12'>
           Download and install the EAZYGO app. Enter your phone number and make your user account. When approved, you
           must start driving.
         </p>
-        <div className='options flex justify-center pb-3'>
-          <span>
-            <Link to='/' className='font-semibold pe-8 text-lg active-link'>
-              For Passenger
-            </Link>
-          </span>
-          <span>
-            <a href='/' className='font-semibold pe-8 text-lg'>
-              <em>For a driver</em>
-            </a>
-          </span>
-          <span>
-            <Link to='/' className='font-semibold pe-8 text-lg'>
-              Trust $ Safety
-            </Link>
-          </span>
-          <span>
-            <Link to='/' className='font-semibold text-lg'>
-              Sustainability
-            </Link>
-          </span>
+        <div className='options flex flex-wrap justify-center pb-3'>
+          {tabsOptions.map((tabOption, index) => (
+            <div className='option-wrapper' key={index}>
+              <Link
+                to={tabOption.link}
+                className={`font-semibold pe-8 text-lg ${active === index ? 'active-link' : ''}`}
+                onClick={() => handleClick(index)}
+              >
+                {tabOption.title}
+              </Link>
+            </div>
+          ))}
         </div>
-        <div className='flex justify-center items-center'>
+        <div className='flex flex-wrap justify-center items-center steps-items'>
           <div className='first-container'>
             <span className='steps-svg first-svg'>
               <img src={FirstStep} alt='mockup' className='h-[55px] pb-3' />
@@ -61,10 +74,8 @@ export default function HowItWorks() {
               Gent instant notifications for your rides and be in contact with fellow riders all the time
             </span>
           </div>
-          <div className='phone-icon'>
-            <div className='how-it-works-svg'>
-              <img src={HowItWork} alt='mockup' className='h-[480px]' />
-            </div>
+          <div className='how-it-works-svg'>
+            <img src={HowItWork} alt='mockup' className='h-[480px]' />
           </div>
           <div className='second-container'>
             <div className='second-svg'>
@@ -94,7 +105,6 @@ export default function HowItWorks() {
           <i className='fa-solid fa-circle text-green-300'></i>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
