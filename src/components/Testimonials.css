@@ -1,0 +1,71 @@
+#child1{
+    margin-left: 9%;
+    color: gray;
+    width: 30%;
+}
+#h5{
+    color: black;
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 6%;
+}
+#parent{
+    display: flex;
+    width: 100%;
+}
+#child2{
+    display: flex;
+    width: 60%;
+}
+.rating {
+    color: #75BF7A; 
+}
+  
+.star {
+    font-size: 24px; 
+}
+  
+.empty {
+    color: #ccc; 
+}
+.redLine{
+    border-bottom: 1px solid red;
+}
+.image1{
+    border-radius: 85%;
+    width: 2em;
+    height: 2em;
+    margin-top: 0.5em;
+}
+.user{
+    display: flex;
+    margin-top: 1em;
+}
+.user1 span{
+    margin-left: 1em;
+    display: block;
+}
+.role{
+    color: gray;
+    margin-top: 0em;
+}
+#child2>div{
+    margin-left: 1em;
+    border-radius: 0.3em;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 2em;
+    width: 25em;
+    height: 15em;
+}
+.slide-buttons button{
+    background-color: #F9F9F9;
+}
+.slide-buttons{
+    margin-left: 2em;
+    margin-top: 1em;
+}
+.fa-solid{
+    color: #75BF7A;
+    margin-right: 1em;
+    font-size: 1em;
+}
