@@ -12,11 +12,9 @@ const SignUp = () => {
         <div className='flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5'>
           <div className='w-full'>
             <h1 className='text-2xl font-semibold tracking-wider text-black capitalize '>Get your free account now.</h1>
-
             <p className='mt-4 text-black '>
               Let’s get you all set up so you can verify your personal account and begin setting up your profile.
             </p>
-
             <div className='mt-6'>
               <h1 className='text-black '>Select type of account</h1>
 
@@ -148,5 +146,4 @@ const SignUp = () => {
     </section>
   );
 };
-
 export default SignUp;
