@@ -8,6 +8,7 @@ import {
   SignUpPage,
   ChoosePage,
   RequestTripPage,
+  PostATripPage,
 } from '../pages';
 
 // Public Routes
@@ -21,6 +22,7 @@ const publicRoutes = [
   { path: '/registration', element: <SignUpPage /> },
   { path: '/trip/choose', element: <ChoosePage /> },
   { path: '/trip/request', element: <RequestTripPage /> },
+  { path: '/trip/post', element: <PostATripPage /> },
 ];
 
 // Protected Routes

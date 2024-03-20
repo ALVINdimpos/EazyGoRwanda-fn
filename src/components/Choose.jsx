@@ -20,6 +20,9 @@ const Choose = () => {
             className='flex flex-col items-center'
             whileHover={{ scale: 1.05 }} // Increase size on hover
             whileTap={{ scale: 0.95 }} // Decrease size on tap
+            onClick={() => {
+              navigate('/trip/post');
+            }}
           >
             <div className='p-4 text-white bg-blue-500 rounded-full'>
               <FaCar className='text-4xl' />
