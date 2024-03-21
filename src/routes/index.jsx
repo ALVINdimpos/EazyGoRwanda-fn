@@ -9,6 +9,8 @@ import {
   ChoosePage,
   RequestTripPage,
   PostATripPage,
+  TravelPage,
+  TripDetailsPage,
 } from '../pages';
 
 // Public Routes
@@ -23,6 +25,8 @@ const publicRoutes = [
   { path: '/trip/choose', element: <ChoosePage /> },
   { path: '/trip/request', element: <RequestTripPage /> },
   { path: '/trip/post', element: <PostATripPage /> },
+  { path: '/travel', element: <TravelPage /> },
+  { path: '/trip/:id', element: <TripDetailsPage /> },
 ];
 
 // Protected Routes
