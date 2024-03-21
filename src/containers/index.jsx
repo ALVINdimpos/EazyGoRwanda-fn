@@ -6,3 +6,5 @@ export { default as ForgotPassword } from './ForgotPassword';
 export { default as SignUp } from './SignUp';
 export { default as RequestTrip } from './RequestTrip';
 export { default as PostATrip } from './PostATrip';
+export { default as Travel } from './Travel';
+export { default as TripDetails } from './TripDetails';
