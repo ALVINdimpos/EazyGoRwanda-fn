@@ -63,6 +63,16 @@ export default function HowItWorks() {
           </div>
         </>
       ),
+      dots: (
+        <>
+          <div className='dots'>
+            <i className='fa-solid fa-circle pe-1 text-green-600'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle text-green-300'></i>
+          </div>
+        </>
+      ),
     },
     {
       title: 'For a Driver',
@@ -112,6 +122,16 @@ export default function HowItWorks() {
               Accept cashless payments from passengers. No need to handle cash, making transactions safer and more
               convenient.
             </span>
+          </div>
+        </>
+      ),
+      dots: (
+        <>
+          <div className='dots'>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-600'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle text-green-300'></i>
           </div>
         </>
       ),
@@ -167,6 +187,16 @@ export default function HowItWorks() {
           </div>
         </>
       ),
+      dots: (
+        <>
+          <div className='dots'>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-600'></i>
+            <i className='fa-solid fa-circle text-green-300'></i>
+          </div>
+        </>
+      ),
     },
     {
       title: 'Sustainability',
@@ -219,6 +249,16 @@ export default function HowItWorks() {
           </div>
         </>
       ),
+      dots: (
+        <>
+          <div className='dots'>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+            <i className='fa-solid fa-circle text-green-600'></i>
+          </div>
+        </>
+      ),
     },
   ];
 
@@ -249,12 +289,7 @@ export default function HowItWorks() {
           {/* Content based onactive index */}
           {tabsOptions[active].content}
         </div>
-        <div className='dots'>
-          <i className='fa-solid fa-circle pe-1 text-green-600'></i>
-          <i className='fa-solid fa-circle pe-1 text-green-300'></i>
-          <i className='fa-solid fa-circle pe-1 text-green-300'></i>
-          <i className='fa-solid fa-circle text-green-300'></i>
-        </div>
+        {tabsOptions[active].dots}
       </div>
     </div>
   );
