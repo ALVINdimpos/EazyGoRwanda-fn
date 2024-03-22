@@ -4,9 +4,10 @@ import { Logo } from '../assets';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaPlusCircle } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
@@ -30,7 +31,7 @@ const Navbar = () => {
             </li>
             <li className='flex items-center p-5 space-x-2 xl:p-8'>
               <FaPlusCircle className='text-2xl' />
-              <Link to='/' className='hover:underline'>
+              <Link to='/trip/choose' className='hover:underline'>
                 <span className='font-bold'>Post a trip</span>
               </Link>
             </li>
@@ -68,6 +69,9 @@ const Navbar = () => {
 
         <button
           className={`px-8 py-2 font-bold border border-white rounded-md text-secondary ${menuOpen ? 'mr-4' : 'mr-4'}`}
+          onClick={() => {
+            navigate('/login');
+          }}
         >
           Sign In
         </button>
