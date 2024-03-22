@@ -83,8 +83,23 @@ h1 {
   padding-top: 15vh;
 }
 
+.container-div {
+ @apply w-full p-5
+}
+
+.section-title {
+  @apply font-bold font-serif text-4xl leading-10 mb-4 p-0
+}
+
+.section-subtitle {
+  @apply leading-6 font-extralight text-xl text-gray-600 mb-10
+}
+
+.cutline {
+  @apply w-[6%] h-1 bg-slate-200
+}
+
 button,
-[type='button'],
 [type='reset'],
 [type='submit'] {
   background-color: #75bf7a;
