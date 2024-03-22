@@ -100,7 +100,7 @@ export default function HowItWorks() {
               <span className='font-black uppercase text-base text-left'>Set Your Schedule</span>
               <br />
               <span className='text-gray-600 text-base text-right'>
-                Drive when it's convenient for you. Set your own schedule and availability to maximize your earnings.
+                Drive when it is convenient for you. Set your own schedule and availability to maximize your earnings.
               </span>
             </div>
             <span className='steps-svg fourth-svg'>
