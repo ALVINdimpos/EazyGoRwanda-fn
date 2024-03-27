@@ -5,3 +5,5 @@ export { default as FirstStep } from './1.svg';
 export { default as SecondStep } from './2.svg';
 export { default as ThirdStep } from './3.svg';
 export { default as FourthStep } from './4.svg';
+export { default as picture } from './picture.jpg';
+export { default as reg } from './reg.jpg';
