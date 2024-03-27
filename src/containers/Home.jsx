@@ -2,6 +2,7 @@
 import React from 'react';
 import { Navbar } from '../components';
 import HeroSection from '../components/HeroSection';
+import EasyGoBenefits from '../components/EasyGoBenefits';
 import Footer from './Footer';
 import Testimonials from '../components/Testimonials';
 import CarpoolSection from '../components/CarpoolSection';
@@ -10,6 +11,7 @@ const Home = () => {
     <div>
       <Navbar />
       <HeroSection />
+      <EasyGoBenefits />
       <Testimonials />
       <CarpoolSection />
       <Footer />
