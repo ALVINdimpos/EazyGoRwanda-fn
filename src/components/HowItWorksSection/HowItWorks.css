@@ -9,6 +9,12 @@
 
 .HowItWorks h1 {
   font-style: italic !important;
+  margin-bottom: 300px;
+  margin-top: 80px;
+}
+
+.HowItWorks h1 {
+  font-style: italic;
 }
 
 .HowItWorks p {
@@ -25,6 +31,9 @@
 .options {
   white-space: nowrap;
   font-style: italic;
+  white-space: wrap;
+  display: flex;
+  justify-content: center;
 }
 
 .options span {
@@ -36,6 +45,7 @@
 }
 
 .phone-icon {
+.how-it-works-svg {
   padding: 40px;
 }
 
@@ -75,4 +85,83 @@
   display: flex;
   justify-content: center;
   font-size: 14px;
+}
+@media (max-width: 800px) {
+  .HowItWorks {
+    margin-top: 160px;
+  }
+
+   .HowItWorks {
+    margin-bottom: 350px;
+   }
+
+  .HowItWorks p {
+    max-width: 74%;
+  }
+
+  .first-container,
+  .second-container {
+    width: 85%;
+    padding: 15px;
+    align-items: center;
+  }
+
+ .how-it-works-svg {
+    display: none;
+  }
+
+   .steps-items {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .post-a-ride {
+    padding-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .HowItWorks {
+    margin-top: 100px;
+    margin-bottom: 280px;
+  }
+
+  .option-wrapper {
+    padding-bottom: 10px;
+  }
+
+  .sustainability,
+  .trust {
+    padding-left: 0;
+  }
+}
+
+
+@media (max-width: 375px) {
+ .HowItWorks {
+    margin-top: 240px;
+    margin-bottom: 520px;
+  } 
+}
+
+
+@media (max-width: 280px) {
+ .HowItWorks {
+    margin-top: 370px;
+    margin-bottom: 670px;
+  } 
+
+   .options {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .HowItWorks h1 {
+  font-size:20px;
+}
 }
