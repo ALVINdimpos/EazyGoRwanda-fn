@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
-
+import { Home, NotFound, UnAuthorized, FindRide, Travel } from '../containers';
+import { Home, NotFound, UnAuthorized, FindRide, ForgotPassword, SignUp, RequestTrip, PostATrip } from '../containers';
 import {
   Home,
   NotFound,
@@ -21,6 +22,7 @@ const HomePage = () => <Home />;
 const NotFoundPage = () => <NotFound />;
 const UnAuthorizedPage = () => <UnAuthorized />;
 const FindRidePage = () => <FindRide />;
+const TravelPage = () => <Travel />;
 const LoginPage = () => <Login />;
 const ForgotPasswordPage = () => <ForgotPassword />;
 const SignUpPage = () => <SignUp />;
@@ -44,6 +46,7 @@ export {
   SignUpPage,
   ChoosePage,
   RequestTripPage,
+  TravelPage,
   PostATripPage,
   TravelPage,
   TripDetailsPage,

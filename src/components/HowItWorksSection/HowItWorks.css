@@ -4,6 +4,11 @@
   margin: 0 auto;
   font-style: italic;
   max-height: 100vh;
+  margin-bottom: 260px;
+}
+
+.HowItWorks h1 {
+  font-style: italic !important;
   margin-bottom: 300px;
   margin-top: 80px;
 }
@@ -16,7 +21,7 @@
   display: block;
   margin: 0 auto;
   max-width: 32%;
-  font-style: italic;
+  font-style: italic !important;
 }
 
 .eazy-go {
@@ -24,6 +29,8 @@
 }
 
 .options {
+  white-space: nowrap;
+  font-style: italic;
   white-space: wrap;
   display: flex;
   justify-content: center;
@@ -37,6 +44,7 @@
   text-align: right;
 }
 
+.phone-icon {
 .how-it-works-svg {
   padding: 40px;
 }
@@ -78,7 +86,6 @@
   justify-content: center;
   font-size: 14px;
 }
-
 @media (max-width: 800px) {
   .HowItWorks {
     margin-top: 160px;

@@ -38,9 +38,10 @@ export default function HowItWorks() {
               Gent instant notifications for your rides and be in contact with fellow riders all the time
             </span>
           </div>
-          <div className='how-it-works-svg'>
-            <img src={HowItWork} alt='mockup' className='h-[480px]' />
-          </div>
+          <div className='phone-icon'>
+            <div className='how-it-works-svg'>
+              <img src={HowItWork} alt='mockup' className='h-[480px]' />
+            </div>
           <div className='second-container'>
             <div className='second-svg'>
               <span className='steps-svg'>
@@ -61,6 +62,15 @@ export default function HowItWorks() {
               Payment made easy by using your own Wallet – no more cash to carry
             </span>
           </div>
+        </div>
+        <div className='dots'>
+          <i className='fa-solid fa-circle pe-1 text-green-600'></i>
+          <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+          <i className='fa-solid fa-circle pe-1 text-green-300'></i>
+          <i className='fa-solid fa-circle text-green-300'></i>
+        </div>
+      </div>
+      <Footer />
         </>
       ),
       dots: (
