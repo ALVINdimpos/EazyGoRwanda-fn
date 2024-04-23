@@ -1,0 +1,160 @@
+.HowItWorks {
+  background-color: #f9f9f9;
+  display: block;
+  margin: 0 auto;
+  font-style: italic;
+  max-height: 100vh;
+  margin-bottom: 300px;
+  margin-top: 80px;
+}
+
+.HowItWorks h1 {
+  font-style: italic;
+}
+
+.HowItWorks p {
+  display: block;
+  margin: 0 auto;
+  max-width: 32%;
+  font-style: italic;
+}
+
+.eazy-go {
+  color: #75bf7a;
+}
+
+.options {
+  white-space: wrap;
+  display: flex;
+  justify-content: center;
+}
+
+.options span {
+  display: inline-block;
+}
+
+.first-container {
+  text-align: right;
+}
+
+.how-it-works-svg {
+  padding: 40px;
+}
+
+.first-svg,
+.third-svg {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.second-svg {
+  padding-bottom: 45px;
+}
+
+.third-svg,
+.fourth-svg {
+  padding-top: 30px;
+}
+
+.first-container,
+.second-container {
+  width: 16%;
+}
+
+.post-a-ride {
+  padding-bottom: 20px;
+}
+
+.active-link {
+  text-decoration: underline;
+  font-weight: bold;
+  text-decoration-color: #75bf7a;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 4px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+}
+
+@media (max-width: 800px) {
+  .HowItWorks {
+    margin-top: 160px;
+  }
+
+   .HowItWorks {
+    margin-bottom: 350px;
+   }
+
+  .HowItWorks p {
+    max-width: 74%;
+  }
+
+  .first-container,
+  .second-container {
+    width: 85%;
+    padding: 15px;
+    align-items: center;
+  }
+
+ .how-it-works-svg {
+    display: none;
+  }
+
+   .steps-items {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .post-a-ride {
+    padding-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .HowItWorks {
+    margin-top: 100px;
+    margin-bottom: 280px;
+  }
+
+  .option-wrapper {
+    padding-bottom: 10px;
+  }
+
+  .sustainability,
+  .trust {
+    padding-left: 0;
+  }
+}
+
+
+@media (max-width: 375px) {
+ .HowItWorks {
+    margin-top: 240px;
+    margin-bottom: 520px;
+  } 
+}
+
+
+@media (max-width: 280px) {
+ .HowItWorks {
+    margin-top: 370px;
+    margin-bottom: 670px;
+  } 
+
+   .options {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .HowItWorks h1 {
+  font-size:20px;
+}
+}

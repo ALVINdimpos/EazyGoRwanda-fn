@@ -36,7 +36,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='p-5 xl:p-8'>
-              <Link to='/'>How it works</Link>
+              <Link to='/how-it-works'>How it works</Link>
             </li>
           </ul>
         </nav>

@@ -1,9 +1,21 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
 
-import { Home, NotFound, UnAuthorized, FindRide, ForgotPassword, SignUp, RequestTrip, PostATrip } from '../containers';
+import {
+  Home,
+  NotFound,
+  UnAuthorized,
+  FindRide,
+  ForgotPassword,
+  SignUp,
+  RequestTrip,
+  PostATrip,
+  Travel,
+  TripDetails,
+} from '../containers';
 import Choose from '../components/Choose';
 import Login from '../containers/Login';
+
 // public routes
 const HomePage = () => <Home />;
 const NotFoundPage = () => <NotFound />;
@@ -15,10 +27,13 @@ const SignUpPage = () => <SignUp />;
 const ChoosePage = () => <Choose />;
 const RequestTripPage = () => <RequestTrip />;
 const PostATripPage = () => <PostATrip />;
+const TravelPage = () => <Travel />;
+const TripDetailsPage = () => <TripDetails />;
 
 // protected pages
 
 // export
+
 export {
   HomePage,
   NotFoundPage,
@@ -30,4 +45,6 @@ export {
   ChoosePage,
   RequestTripPage,
   PostATripPage,
+  TravelPage,
+  TripDetailsPage,
 };
