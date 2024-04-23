@@ -9,8 +9,8 @@
 
 .HowItWorks h1 {
   font-style: italic !important;
-  margin-bottom: 300px;
-  margin-top: 80px;
+  font-size: 40px;
+  padding: 4rem;
 }
 
 .HowItWorks h1 {
@@ -45,6 +45,8 @@
 }
 
 .phone-icon {
+  padding-right: 10px;
+}
 .how-it-works-svg {
   padding: 40px;
 }
