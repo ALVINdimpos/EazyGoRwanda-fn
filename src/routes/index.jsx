@@ -10,7 +10,6 @@ import {
   ChoosePage,
   RequestTripPage,
   PostATripPage,
-  TravelPage
   TravelPage,
   TripDetailsPage,
 } from '../pages';
