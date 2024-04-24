@@ -3,6 +3,7 @@ import React from 'react';
 import { GiPoliceCar } from 'react-icons/gi';
 import { GiLegArmor } from 'react-icons/gi';
 import { reg } from '../assets';
+import './sign_up.css';
 const SignUp = () => {
   return (
     <section className='bg-white '>

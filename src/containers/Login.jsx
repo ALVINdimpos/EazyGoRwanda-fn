@@ -121,7 +121,6 @@ const Login = () => {
                 </button>
               </div>
             </form>
-
             <p className='mb-4 text-center'>
               New on Eazy Go Rwanda ?
               <Link to='/registration' className='no-underline cursor-pointer text-primary hover:text-primary-500'>
