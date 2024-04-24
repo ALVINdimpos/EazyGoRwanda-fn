@@ -268,10 +268,10 @@ export default function HowItWorks() {
     <div className='min-h-screen ' id='HowItWorks'>
       <div className='pt-10 HowItWorks'>
         <h1 className='pb-6 text-2xl font-semibold text-center uppercase'>
-          How <span className='eazy-go'>EazyGo</span> Works
+          How <span className='eazy-go'>TegaRide</span> Works
         </h1>
         <p className='max-w-2xl pb-12 mb-6 font-light text-center text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400'>
-          Download and install the EAZYGO app. Enter your phone number and make your user account. When approved, you
+          Download and install the TegaRide app. Enter your phone number and make your user account. When approved, you
           must start driving.
         </p>
         <div className='flex flex-wrap justify-center pb-3 options'>

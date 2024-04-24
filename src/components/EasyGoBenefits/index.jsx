@@ -6,7 +6,7 @@ function EasyGoBenefits() {
   return (
     <div className='h-fit  lg:block lg:p-40 bg-slate-100'>
       <p className='w-fit mx-auto text-6xl my-8'>
-        <span className='text-green-400'>EAZYGO</span> Benefits
+        <span className='text-green-400'>TegaRide</span> Benefits
       </p>
 
       {/* card 1 */}
@@ -53,7 +53,7 @@ function EasyGoBenefits() {
           </div>
           <img src={icon3} alt='' className='flex-1 lg:hidden' />
           <p className='self-start text-xl leading-tight text-slate-500'>
-            EAZYGO is a local service provider and we are proud to support you in your local language. We are proud to
+            TegaRide is a local service provider and we are proud to support you in your local language. We are proud to
             be at your service 24/7!
           </p>
         </div>

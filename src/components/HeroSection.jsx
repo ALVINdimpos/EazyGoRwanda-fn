@@ -14,7 +14,7 @@ const HeroSection = () => {
             Save Time, Save Money, Safe Rides: Your Journey, Your Way!
           </h1>
           <p className='max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400'>
-            Welcome to EasyGoRwanda – where every ride is an experience, and every journey is crafted for your comfort.
+            Welcome to TegaRide – where every ride is an experience, and every journey is crafted for your comfort.
             Enjoy the convenience of seamless travel, hassle-free transactions, and the assurance of safety.
           </p>
           <Link

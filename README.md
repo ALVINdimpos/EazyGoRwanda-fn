@@ -1,12 +1,12 @@
-# EazyGoRwanda: Simplifying Travel and Transportation in Rwanda FN
+# TegaRideRwanda: Simplifying Travel and Transportation in Rwanda FN
 
 ## Overview
 
-Welcome to **EazyGoRwanda**, your all-in-one platform for seamless travel and transportation experiences in Rwanda. We aim to simplify and enhance the way you navigate through the beautiful landscapes of Rwanda, ensuring a smooth and convenient journey.
+Welcome to **TegaRideRwanda**, your all-in-one platform for seamless travel and transportation experiences in Rwanda. We aim to simplify and enhance the way you navigate through the beautiful landscapes of Rwanda, ensuring a smooth and convenient journey.
 
 ## Table of Contents
 
-- [EazyGoRwanda: Simplifying Travel and Transportation in Rwanda FN](#eazygorwanda-simplifying-travel-and-transportation-in-rwanda-fn)
+- [TegaRideRwanda: Simplifying Travel and Transportation in Rwanda FN](#TegaRiderwanda-simplifying-travel-and-transportation-in-rwanda-fn)
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
@@ -19,13 +19,13 @@ Welcome to **EazyGoRwanda**, your all-in-one platform for seamless travel and tr
 1. Clone the GitLab repository:
 
    ```bash
-   git clone https://github.com/ALVINdimpos/EazyGoRwanda-fn.git
+   git clone https://github.com/ALVINdimpos/TegaRideRwanda-fn.git
    ```
 
 2. Navigate to the project folder:
 
    ```bash
-   cd EazyGoRwanda-fn
+   cd TegaRideRwanda-fn
    ```
 
 3. Install dependencies:
@@ -53,7 +53,7 @@ npm run build
 ## Project Structure
 
 ```
-EazyGoRwanda-fn/
+TegaRideRwanda-fn/
 |-- src/
 |   |-- api/
 |   |-- assets/
