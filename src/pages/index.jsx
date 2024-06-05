@@ -11,6 +11,10 @@ import {
   PostATrip,
   Travel,
   TripDetails,
+  Drivers,
+  Passengers,
+  TrustSafety,
+  PostTripRules,
 } from '../containers';
 import Choose from '../components/Choose';
 import Login from '../containers/Login';
@@ -28,6 +32,10 @@ const RequestTripPage = () => <RequestTrip />;
 const PostATripPage = () => <PostATrip />;
 const TravelPage = () => <Travel />;
 const TripDetailsPage = () => <TripDetails />;
+const DriversPage = () => <Drivers />;
+const PassengersPage = () => <Passengers />;
+const TrustSafetyPage = () => <TrustSafety />;
+const PostTripRulesPage = () => <PostTripRules />;
 
 // export
 
@@ -44,4 +52,8 @@ export {
   TravelPage,
   PostATripPage,
   TripDetailsPage,
+  DriversPage,
+  PassengersPage,
+  TrustSafetyPage,
+  PostTripRulesPage,
 };

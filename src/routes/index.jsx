@@ -12,7 +12,15 @@ import {
   PostATripPage,
   TravelPage,
   TripDetailsPage,
+  DriversPage,
+  PassengersPage,
+  TrustSafetyPage,
+  PostTripRulesPage,
 } from '../pages';
+import '../dashboard/css/style.css';
+import '../dashboard/charts/ChartjsConfig';
+
+import Dashboard from '../dashboard/pages/Dashboard';
 
 // Public Routes
 const publicRoutes = [
@@ -35,6 +43,11 @@ const publicRoutes = [
   { path: '/trip/post', element: <PostATripPage /> },
   { path: '/travel', element: <TravelPage /> },
   { path: '/trip/:id', element: <TripDetailsPage /> },
+  { path: '/dashboard', element: <Dashboard /> },
+  { path: '/drivers', element: <DriversPage /> },
+  { path: '/passengers', element: <PassengersPage /> },
+  { path: '/trust-safety', element: <TrustSafetyPage /> },
+  { path: '/post-trip-rules', element: <PostTripRulesPage /> },
 ];
 
 // Protected Routes

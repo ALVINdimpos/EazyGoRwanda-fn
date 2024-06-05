@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom';
 import { FaSearch, FaPlusCircle } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
@@ -35,14 +38,38 @@ const Navbar = () => {
                 <span className='font-bold'>Post a trip</span>
               </Link>
             </li>
-            <li className='p-5 xl:p-8'>
-              <a href='#HowItWorks'>How it works</a>
+            <li
+              className='relative p-5 xl:p-8'
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <Link className='focus:outline-none'>How it works</Link>
+              {dropdownOpen && (
+                <ul
+                  className='absolute right-0 z-10 mt-2 bg-white border rounded shadow-lg top-full'
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <li className='px-4 py-2 hover:bg-gray-100'>
+                    <Link to='#'>For drivers</Link>
+                  </li>
+                  <li className='px-4 py-2 hover:bg-gray-100'>
+                    <Link to='#'>For passengers</Link>
+                  </li>
+                  <li className='px-4 py-2 hover:bg-gray-100'>
+                    <Link to='#'>Carpool for the Planet</Link>
+                  </li>
+                  <li className='px-4 py-2 hover:bg-gray-100'>
+                    <Link to='#'>For students</Link>
+                  </li>
+                </ul>
+              )}
             </li>
           </ul>
         </nav>
 
         {/* Hamburger menu for smaller screens */}
-        <div className='md:hidden '>
+        <div className='md:hidden'>
           <button onClick={handleMenuToggle} className='text-4xl bg-white text-floor focus:outline-none'>
             <GiHamburgerMenu />
           </button>
@@ -54,13 +81,37 @@ const Navbar = () => {
                   <Link to='/'>Home</Link>
                 </li>
                 <li className='mb-2'>
-                  <Link to='/'>Find a ride</Link>
+                  <Link to='/find-ride'>Find a ride</Link>
                 </li>
                 <li className='mb-2'>
-                  <Link to='/'>Post a trip</Link>
+                  <Link to='/trip/choose'>Post a trip</Link>
                 </li>
-                <li>
-                  <Link to='#HowItWorks'>How it works</Link>
+                <li
+                  className='relative mb-2'
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <button className='focus:outline-none'>How it works</button>
+                  {dropdownOpen && (
+                    <ul
+                      className='absolute right-0 z-10 mt-2 bg-white border rounded shadow-lg top-full'
+                      onMouseEnter={() => setDropdownOpen(true)}
+                      onMouseLeave={() => setDropdownOpen(false)}
+                    >
+                      <li className='px-4 py-2 hover:bg-gray-100'>
+                        <Link to='#'>For drivers</Link>
+                      </li>
+                      <li className='px-4 py-2 hover:bg-gray-100'>
+                        <Link to='#'>For passengers</Link>
+                      </li>
+                      <li className='px-4 py-2 hover:bg-gray-100'>
+                        <Link to='#'>Carpool for the Planet</Link>
+                      </li>
+                      <li className='px-4 py-2 hover:bg-gray-100'>
+                        <Link to='#'>For students</Link>
+                      </li>
+                    </ul>
+                  )}
                 </li>
               </ul>
             </div>

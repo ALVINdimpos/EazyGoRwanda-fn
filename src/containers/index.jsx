@@ -8,3 +8,7 @@ export { default as SignUp } from './SignUp';
 export { default as RequestTrip } from './RequestTrip';
 export { default as PostATrip } from './PostATrip';
 export { default as TripDetails } from './TripDetails';
+export { default as Drivers } from './Drivers';
+export { default as Passengers } from './Passengers';
+export { default as TrustSafety } from './TrustSafety';
+export { default as PostTripRules } from './PostTripRules';

@@ -7,3 +7,7 @@ export { default as ThirdStep } from './3.svg';
 export { default as FourthStep } from './4.svg';
 export { default as picture } from './picture.jpg';
 export { default as reg } from './reg.jpg';
+export { default as passengerIcon } from './passenger.svg';
+export { default as ReliablePassengers } from './ReliablePassengers.svg';
+export { default as SecurePayment } from './secure_payments.svg';
+export { default as ReviewDriver } from './review_driver.svg';
