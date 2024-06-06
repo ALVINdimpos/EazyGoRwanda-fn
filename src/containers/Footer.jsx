@@ -77,7 +77,7 @@ const Footer = () => {
             </div>
           </div>
           <hr className='border-gray-600' />
-          <p className='w-full my-12 text-center text-gray-600'>Copyright © {currentYear} CleverCraft Tech</p>
+          <p className='w-full my-12 text-center text-gray-600'>Copyright © {currentYear} Alvin Coder</p>
         </div>
       </div>
     </div>

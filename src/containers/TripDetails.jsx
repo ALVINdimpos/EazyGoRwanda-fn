@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaCar, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaCommentDots, FaCheckCircle } from 'react-icons/fa';
 import Footer from './Footer';
 import Navbar from '../components/Navbar';
 import { CarpoolSection } from '../components';
+
 const TripDetails = () => {
   const { tripId } = useParams();
 
@@ -34,13 +35,31 @@ const TripDetails = () => {
     rating: 4.8,
     avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
     isVerified: true,
+    bio: 'Experienced driver with over 5 years of driving experience. Friendly and professional.',
+    tripsCompleted: 150,
+    contact: 'john.doe@example.com',
   };
 
   // Dummy reviews data
   const reviews = [
-    { id: 1, rating: 5, comment: 'Great driver, smooth trip.' },
-    { id: 2, rating: 4, comment: 'Nice car, friendly driver.' },
-    { id: 3, rating: 3, comment: 'Average trip, could be better.' },
+    {
+      id: 1,
+      rating: 5,
+      comment: 'Great driver, smooth trip.',
+      avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
+    },
+    {
+      id: 2,
+      rating: 4,
+      comment: 'Nice car, friendly driver.',
+      avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
+    },
+    {
+      id: 3,
+      rating: 3,
+      comment: 'Average trip, could be better.',
+      avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
+    },
   ];
 
   const [message, setMessage] = useState('');
@@ -67,21 +86,27 @@ const TripDetails = () => {
             <h2 className='mb-4 text-3xl font-bold'>Trip Details</h2>
             <div>
               <p>
+                <FaMapMarkerAlt className='inline mr-2' />
                 <span className='font-bold'>Origin:</span> {tripDetails.origin}
               </p>
               <p>
+                <FaMapMarkerAlt className='inline mr-2' />
                 <span className='font-bold'>Destination:</span> {tripDetails.destination}
               </p>
               <p>
+                <FaCalendarAlt className='inline mr-2' />
                 <span className='font-bold'>Departure Date:</span> {tripDetails.departureDate}
               </p>
               <p>
+                <FaUser className='inline mr-2' />
                 <span className='font-bold'>Available Seats:</span> {tripDetails.availableSeats}
               </p>
               <p>
+                <FaCommentDots className='inline mr-2' />
                 <span className='font-bold'>Price Per Seat:</span> ${tripDetails.pricePerSeat}
               </p>
               <div className='flex items-center'>
+                <FaCar className='inline mr-2' />
                 <span className='mr-2 font-bold'>Car:</span>
                 <img src={tripDetails.carImage} alt={tripDetails.car} className='w-16 h-16 rounded-full' />
                 <p className='ml-2'>{tripDetails.car}</p>
@@ -111,13 +136,15 @@ const TripDetails = () => {
           </div>
           <div className='px-6 py-8 bg-white rounded-lg shadow-md'>
             <h2 className='mb-4 text-3xl font-bold'>Driver Details</h2>
-            <div className='flex items-center'>
+            <div className='flex items-center mb-4'>
               <img src={driverDetails.avatar} alt={driverDetails.name} className='w-16 h-16 rounded-full' />
               <div className='ml-4'>
-                <p>
-                  <span className='font-bold'>Name:</span> {driverDetails.name}
+                <p className='flex items-center'>
+                  <FaCheckCircle className='inline text-green-500' />
+                  <span className='ml-2 font-bold'>Name:</span> {driverDetails.name}
                 </p>
-                <p>
+                <p className='flex items-center'>
+                  <FaStar className='inline mr-2 text-yellow-500' />
                   <span className='font-bold'>Rating:</span> {driverDetails.rating}
                 </p>
                 <p>
@@ -125,15 +152,30 @@ const TripDetails = () => {
                 </p>
               </div>
             </div>
+            <p>
+              <span className='font-bold'>Bio:</span> {driverDetails.bio}
+            </p>
+            <p>
+              <span className='font-bold'>Trips Completed:</span> {driverDetails.tripsCompleted}
+            </p>
+            <button className='px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600'>
+              Contact Driver
+            </button>
           </div>
         </div>
 
         <div className='px-6 py-8 mt-8 bg-white rounded-lg shadow-md'>
           <h2 className='mb-4 text-3xl font-bold'>Reviews</h2>
           {reviews.map(review => (
-            <div key={review.id} className='flex items-center mb-2'>
-              <FaStar className='mr-2 text-yellow-500' />
-              <p>{review.comment}</p>
+            <div key={review.id} className='flex items-center mb-4'>
+              <img src={review.avatar} alt='avatar' className='w-10 h-10 mr-4 rounded-full' />
+              <div>
+                <div className='flex items-center mb-1'>
+                  <FaStar className='mr-1 text-yellow-500' />
+                  <span className='font-bold'>{review.rating}</span>
+                </div>
+                <p>{review.comment}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -155,13 +197,13 @@ const TripDetails = () => {
               value={message}
               onChange={e => setMessage(e.target.value)}
             />
-            <button className='px-4 text-white rounded-r bg-primary-500' onClick={handleSendMessage}>
+            <button className='px-4 text-white bg-blue-500 rounded-r' onClick={handleSendMessage}>
               Send
             </button>
           </div>
         </div>
 
-        <button className='px-4 py-2 mt-8 text-white transition duration-300 rounded-lg bg-primary hover:bg-primary-600'>
+        <button className='px-4 py-2 mt-8 text-white transition duration-300 bg-blue-500 rounded-lg hover:bg-blue-600'>
           Book Now
         </button>
       </div>

@@ -21,7 +21,7 @@ const Choose = () => {
             whileHover={{ scale: 1.05 }} // Increase size on hover
             whileTap={{ scale: 0.95 }} // Decrease size on tap
             onClick={() => {
-              navigate('/trip/post');
+              navigate('/post-trip-rules');
             }}
           >
             <div className='p-4 text-white bg-blue-500 rounded-full'>

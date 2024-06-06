@@ -1,13 +1,16 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import { MapPin, LuggageIcon } from 'lucide-react';
+import { MapPin, LuggageIcon, CalendarIcon, ClockIcon, UserIcon, DollarSignIcon } from 'lucide-react';
 import { Navbar } from '../components';
 
 function PostATrip() {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
+  const [departureTime, setDepartureTime] = useState('');
   const [pricePerSeat, setPricePerSeat] = useState(3000);
-  const [emptySeats, setEmptySeats] = useState();
+  const [emptySeats, setEmptySeats] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
   const [backRowSeating, setBackRowSeating] = useState('');
   const [tripDescription, setTripDescription] = useState('');
@@ -19,214 +22,156 @@ function PostATrip() {
   const handleClickBackRowSeating = num => {
     setBackRowSeating(num);
   };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    // Handle form submission
+  };
+
   return (
     <>
       <Navbar />
-      <div className='min-h-screen mt-20'>
-        {/* POST A TRIP SECTION */}
-        <div className='container-div mt-9 '>
-          <div>
-            <h1 className='font-extrabold font-serif text-6xl leading-10 mb-4 p-0'>Post A Trip</h1>
-            <div className='flex items-end leading-10 font-extralight text-3xl text-gray-600'>
-              <p>
-                Cover your driving costs by filling your seats when you&apos;re driving from A to B.{' '}
-                <a href='/' className='underline'>
-                  More Info
-                </a>
-              </p>
-            </div>
-            <div className='mt-24 mb-10 cutline' />
+      <div className='min-h-screen mt-20 bg-gray-100'>
+        <div className='container px-6 py-12 mx-auto'>
+          <div className='mb-12 text-center'>
+            <h1 className='mb-4 text-5xl font-extrabold'>Post A Trip</h1>
+            <p className='text-lg text-gray-600'>
+              Cover your driving costs by filling your seats when you're driving from A to B.{' '}
+              <a href='/' className='underline'>
+                More Info
+              </a>
+            </p>
           </div>
-        </div>
 
-        <div className='container-div '>
-          <form>
-            {/* ITENERARY */}
-            <div className='flex gap-20'>
-              {/* left side  */}
-              <div className='lg:w-1/2'>
-                <h2 className='section-title'>Itinerary</h2>
-                <p className='section-subtitle'>
-                  Your origin, destination, and stops you&apos;re willing to make along the way.
-                </p>
+          <form onSubmit={handleSubmit} className='space-y-12'>
+            {/* Itinerary Section */}
+            <div className='p-8 bg-white rounded-lg shadow-lg'>
+              <h2 className='mb-6 text-3xl font-bold'>Itinerary</h2>
+              <p className='mb-6 text-gray-600'>
+                Your origin, destination, and stops you're willing to make along the way.
+              </p>
 
-                <div className='flex w-full items-center mb-[35px]'>
-                  <label className='w-1/3 text-xl'>Origin</label>
-                  <div className='relative h-fit w-2/3'>
-                    <MapPin className='absolute mt-6 ml-1' />
-                    <input
-                      type='text'
-                      placeholder='Enter an origin'
-                      name='origin'
-                      id='origin'
-                      value={origin}
-                      onChange={e => setOrigin(e.target.value)}
-                      required
-                      className='w-full p-7 pl-12 rounded-xl text-xl bg-slate-100'
-                    />
-                  </div>
+              <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                <div className='relative'>
+                  <MapPin className='absolute text-gray-400 transform -translate-y-1/2 top-1/2 left-3' />
+                  <input
+                    type='text'
+                    placeholder='Enter an origin'
+                    value={origin}
+                    onChange={e => setOrigin(e.target.value)}
+                    required
+                    className='w-full py-4 pl-12 pr-4 text-lg bg-gray-100 rounded-lg focus:outline-none'
+                  />
                 </div>
-                <div className='flex w-full items-center mb-[35px]'>
-                  <label className='w-1/3 text-xl'>Destination</label>
-                  <div className='relative h-fit w-2/3'>
-                    <MapPin className='absolute mt-6 ml-1' />
-                    <input
-                      type='text'
-                      placeholder='Enter a destination'
-                      name='destination'
-                      id='destination'
-                      value={destination}
-                      onChange={e => setDestination(e.target.value)}
-                      required
-                      className='w-full p-7 pl-12 rounded-xl text-xl bg-slate-100'
-                    />
-                  </div>
+                <div className='relative'>
+                  <MapPin className='absolute text-gray-400 transform -translate-y-1/2 top-1/2 left-3' />
+                  <input
+                    type='text'
+                    placeholder='Enter a destination'
+                    value={destination}
+                    onChange={e => setDestination(e.target.value)}
+                    required
+                    className='w-full py-4 pl-12 pr-4 text-lg bg-gray-100 rounded-lg focus:outline-none'
+                  />
                 </div>
               </div>
-
-              {/* google map */}
-              <div className='hidden lg:block w-1/2 h-[320px] bg-slate-200 rounded-xl'></div>
             </div>
 
-            <div className='mt-24 mb-20 cutline' />
-
-            {/* RIDE SCHEDULE */}
-            <div>
-              <h2 className='section-title'>Ride Schedule</h2>
-              <p className='section-subtitle'>
+            {/* Ride Schedule Section */}
+            <div className='p-8 bg-white rounded-lg shadow-lg'>
+              <h2 className='mb-6 text-3xl font-bold'>Ride Schedule</h2>
+              <p className='mb-6 text-gray-600'>
                 Enter a precise date and time with{' '}
                 <span className='font-bold text-black'> am (morning) or pm (afternoon).</span>
               </p>
 
-              <div className='flex flex-col lg:flex-row w-full lg:w-1/2 items-center mb-[35px]'>
-                <label className='w-1/3 self-start lg:self-center mb-3 lg:mb-0 text-xl font-semibold  text-slate-500'>
-                  Leaving
-                </label>
-                <div className='flex items-center'>
-                  <div className='relative h-fit w-6/12'>
-                    <input
-                      type='Date'
-                      placeholder='Enter departure date'
-                      name='departureDate'
-                      id='departureDate'
-                      className='w-full p-5 lg:p-7 pl-12 rounded-xl text-xl bg-slate-100'
-                    />
-                  </div>
-                  <p className='mx-5 lg:mx-9 text-xl text-gray-600'>at</p>
+              <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                <div className='relative'>
+                  <CalendarIcon className='absolute text-gray-400 transform -translate-y-1/2 top-1/2 left-3' />
                   <input
-                    type='text'
+                    type='date'
+                    placeholder='Enter departure date'
+                    value={departureDate}
+                    onChange={e => setDepartureDate(e.target.value)}
+                    className='w-full py-4 pl-12 pr-4 text-lg bg-gray-100 rounded-lg focus:outline-none'
+                  />
+                </div>
+                <div className='relative'>
+                  <ClockIcon className='absolute text-gray-400 transform -translate-y-1/2 top-1/2 left-3' />
+                  <input
+                    type='time'
                     placeholder='Time'
-                    name='time'
-                    id='time'
-                    className='w-3/12 p-5 flex-1 lg:p-7 pl-12 rounded-xl text-xl bg-slate-100'
+                    value={departureTime}
+                    onChange={e => setDepartureTime(e.target.value)}
+                    className='w-full py-4 pl-12 pr-4 text-lg bg-gray-100 rounded-lg focus:outline-none'
                   />
                 </div>
               </div>
-
-              <p className='underline lg:ml-64 text-xl text-slate-500'>add a return trip</p>
+              <p className='mt-4 text-blue-600 underline cursor-pointer'>Add a return trip</p>
             </div>
 
-            <div className='mt-24 mb-20 cutline' />
-
-            {/* TRIP PREFERENCES */}
-            <div>
-              <h2 className='section-title'>Trip preferences</h2>
-              <p className='section-subtitle'>
+            {/* Trip Preferences Section */}
+            <div className='p-8 bg-white rounded-lg shadow-lg'>
+              <h2 className='mb-6 text-3xl font-bold'>Trip Preferences</h2>
+              <p className='mb-6 text-gray-600'>
                 This informs passengers of how much space you have for their luggage and extras before they book.
               </p>
 
-              <div className='flex flex-col gap-5'>
-                {/* Luggage */}
-                <div className='flex flex-col gap-3 mb-10 lg:w-1/2'>
-                  <label className='text-xl font-semibold'>Luggage</label>
-
-                  <div className='flex w-full'>
-                    <button
-                      type='button'
-                      className={`flex justify-center items-center w-5/12 py-3 rounded-l-full border  ${
-                        selectedSize === 'No Luggage' ? 'bg-black text-white' : 'bg-transparent'
-                      }`}
-                      onClick={() => handleClickSize('No Luggage')}
-                    >
-                      <LuggageIcon size={20} />
-                      <span className='ml-3 text-xl'>No Luggage</span>
-                    </button>
-                    <button
-                      type='button'
-                      className={`flex justify-center items-center w-2/12 py-3 border  ${
-                        selectedSize === 'S' ? 'bg-black text-white' : 'bg-transparent'
-                      }`}
-                      onClick={() => handleClickSize('S')}
-                    >
-                      <LuggageIcon size={20} />
-                      <span className='ml-3 text-xl'>S</span>
-                    </button>
-                    <button
-                      type='button'
-                      className={`flex justify-center items-center w-2/12 py-3 border  ${
-                        selectedSize === 'M' ? 'bg-black text-white' : 'bg-transparent'
-                      }`}
-                      onClick={() => handleClickSize('M')}
-                    >
-                      <LuggageIcon size={20} />
-                      <span className='ml-3 text-xl'>M</span>
-                    </button>
-                    <button
-                      type='button'
-                      className={`flex justify-center items-center w-3/12 py-3 rounded-r-full border  ${
-                        selectedSize === 'L' ? 'bg-black text-blue-100' : 'bg-transparent'
-                      }`}
-                      onClick={() => handleClickSize('L')}
-                    >
-                      <LuggageIcon size={20} />
-                      <p className='ml-3 font-light text-xl h-fit'>L</p>
-                    </button>
+              <div className='space-y-6'>
+                {/* Luggage Size */}
+                <div>
+                  <label className='block mb-3 text-xl font-semibold'>Luggage</label>
+                  <div className='flex justify-between'>
+                    {['No Luggage', 'S', 'M', 'L'].map(size => (
+                      <button
+                        key={size}
+                        type='button'
+                        onClick={() => handleClickSize(size)}
+                        className={`flex items-center justify-center w-1/4 py-3 rounded-lg border ${
+                          selectedSize === size ? 'bg-blue-600 text-white' : 'bg-gray-100'
+                        }`}
+                      >
+                        <LuggageIcon size={20} />
+                        <span className='ml-2 text-lg'>{size}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                {/* Back row seating */}
-                <div className='flex flex-col gap-3 lg:w-1/2'>
-                  <label className='text-xl font-semibold'>Back Row Seating</label>
-                  <p className='text-xl text-gray-600'>
-                    Pledge to a maximum of 2 people in the back for better reviews
-                  </p>
-
-                  <div className='flex w-full'>
-                    <button
-                      type='button'
-                      onClick={() => handleClickBackRowSeating('2')}
-                      className={`flex justify-center items-center w-6/12 py-3 rounded-l-full border ${backRowSeating == '2' ? 'bg-black text-blue-100' : 'bg-transparent'}`}
-                    >
-                      <LuggageIcon size={20} />
-                      <span className=' ml-3 text-xl'>Max 2 people</span>
-                    </button>
-                    <button
-                      type='button'
-                      onClick={() => handleClickBackRowSeating('3')}
-                      className={`flex justify-center items-center w-6/12 py-3 rounded-r-full border ${backRowSeating == '3' ? 'bg-black text-blue-100' : 'bg-transparent'}`}
-                    >
-                      <LuggageIcon size={20} />
-                      <p className=' ml-3 font-light text-xl h-fit'>Max 3 people</p>
-                    </button>
+                {/* Back Row Seating */}
+                <div>
+                  <label className='block mb-3 text-xl font-semibold'>Back Row Seating</label>
+                  <p className='mb-4 text-gray-600'>Pledge to a maximum of 2 people in the back for better reviews.</p>
+                  <div className='flex justify-between'>
+                    {['2', '3'].map(num => (
+                      <button
+                        key={num}
+                        type='button'
+                        onClick={() => handleClickBackRowSeating(num)}
+                        className={`flex items-center justify-center w-1/2 py-3 rounded-lg border ${
+                          backRowSeating === num ? 'bg-blue-600 text-white' : 'bg-gray-100'
+                        }`}
+                      >
+                        <UserIcon size={20} />
+                        <span className='ml-2 text-lg'>Max {num} people</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className='mt-24 mb-20 cutline' />
-
-            {/* Empty Seats */}
-            <div className='flex flex-col gap-5'>
-              <h2 className='section-title'>Empty Seats</h2>
-
-              <div className='flex gap-3'>
+            {/* Empty Seats Section */}
+            <div className='p-8 bg-white rounded-lg shadow-lg'>
+              <h2 className='mb-6 text-3xl font-bold'>Empty Seats</h2>
+              <div className='flex justify-between'>
                 {[...Array(7)].map((_, i) => (
                   <button
                     key={i}
                     type='button'
                     onClick={() => setEmptySeats(i + 1)}
-                    className={`flex justify-center items-center text-xl h-14 w-14 rounded-full border ${
-                      emptySeats === i + 1 ? 'bg-black text-white' : 'bg-transparent'
+                    className={`flex items-center justify-center w-12 h-12 rounded-full border text-lg ${
+                      emptySeats === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-100'
                     }`}
                   >
                     {i + 1}
@@ -235,80 +180,49 @@ function PostATrip() {
               </div>
             </div>
 
-            <div className='mt-24 mb-20 cutline' />
-
-            {/* PRICING */}
-            <div>
-              <div>
-                <p className='section-title'>Pricing</p>
-                <p className='section-subtitle'>
-                  Enter a fair price per seat to cover your gas and other expenses. Note that all prices are CAD
-                </p>
-              </div>
-
-              <div className='flex flex-col lg:flex-row w-full lg:w-1/2 items-center mb-[35px]'>
-                <label className='w-1/3 self-start lg:self-center mb-3 lg:mb-0 text-xl font-semibold  text-slate-500'>
-                  Price per seat
-                </label>
-                <div className='flex items-center'>
-                  <div className='relative h-fit w-6/12'>
-                    <input
-                      type='Text'
-                      placeholder={'Rwf' + pricePerSeat}
-                      name='origin'
-                      value={pricePerSeat}
-                      onChange={e => setPricePerSeat(e.target.value)}
-                      id='origin'
-                      required
-                      className='w-full p-5 lg:p-7 pl-12 rounded-xl text-xl bg-slate-100'
-                    />
-                  </div>
-                  <p className='mx-5 lg:mx-9 text-2xl font-semibold text-gray-700'>Kigali to Musanze</p>
-                </div>
+            {/* Pricing Section */}
+            <div className='p-8 bg-white rounded-lg shadow-lg'>
+              <h2 className='mb-6 text-3xl font-bold'>Pricing</h2>
+              <p className='mb-6 text-gray-600'>
+                Enter a fair price per seat to cover your gas and other expenses. Note that all prices are in Rwf.
+              </p>
+              <div className='relative flex items-center'>
+                <DollarSignIcon className='absolute text-gray-400 transform -translate-y-1/2 top-1/2 left-3' />
+                <input
+                  type='number'
+                  placeholder='Price per seat'
+                  value={pricePerSeat}
+                  onChange={e => setPricePerSeat(e.target.value)}
+                  className='w-1/2 py-4 pl-12 pr-4 text-lg bg-gray-100 rounded-lg focus:outline-none'
+                />
+                <p className='ml-6 text-xl text-gray-700'>Kigali to Musanze</p>
               </div>
             </div>
 
-            <div className='mt-24 mb-20 cutline' />
-
-            {/* TRIP DESCRIPTION */}
-            <div>
-              <div>
-                <p className='section-title'>Trip Description</p>
-                <p className='section-subtitle'>
-                  Add any details relevant to your trip for passengers before they book.
-                </p>
-
-                <div className='flex w-full lg:w-1/2'>
-                  <label
-                    htmlFor='TripDescription'
-                    className='hidden lg:block w-1/3 self-start lg:self-center mb-3 lg:mb-0 text-xl font-semibold  text-slate-500'
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    name='TripDescription'
-                    id='TripDescription'
-                    placeholder='We recommend writing the exact pick-up and drop-off locations, and any other details that will help passengers find you.'
-                    cols='30'
-                    rows='5'
-                    value={tripDescription}
-                    onChange={e => setTripDescription(e.target.value)}
-                    required
-                    className='w-full p-5 rounded-3xl text-xl bg-slate-100'
-                  ></textarea>
-                </div>
-              </div>
+            {/* Trip Description Section */}
+            <div className='p-8 bg-white rounded-lg shadow-lg'>
+              <h2 className='mb-6 text-3xl font-bold'>Trip Description</h2>
+              <p className='mb-6 text-gray-600'>
+                Add any details relevant to your trip for passengers before they book.
+              </p>
+              <textarea
+                name='TripDescription'
+                placeholder='We recommend writing the exact pick-up and drop-off locations, and any other details that will help passengers find you.'
+                cols='30'
+                rows='5'
+                value={tripDescription}
+                onChange={e => setTripDescription(e.target.value)}
+                className='w-full p-4 text-lg bg-gray-100 rounded-lg focus:outline-none'
+              ></textarea>
             </div>
 
-            <div className='mt-24 mb-20 cutline' />
-
-            {/* POST BUTTON */}
-            <div>
+            {/* Post Button */}
+            <div className='text-center'>
               <button
                 type='submit'
-                className='fixed lg:static bottom-0 left-0 right-0 max-w-full py-5 lg:p-5 lg:rounded-xl bg-slate-100 lg:bg-slate-800 font-semibold lg:text-white border-t-2 text-2xl'
+                className='px-12 py-4 text-xl font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700'
               >
-                Post my trip
+                Post My Trip
               </button>
             </div>
           </form>

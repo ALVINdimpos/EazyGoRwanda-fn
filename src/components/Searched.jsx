@@ -14,11 +14,11 @@ const Searched = () => {
       >
         <div className='relative flex items-center w-full lg:w-2/12'>
           <MapPin className='absolute ml-1' />
-          <input type='text' placeholder='From' className='w-full h-20 pl-12 rounded-md' value='Huye' />
+          <input type='text' placeholder='From' className='w-full h-20 pl-12 rounded-md' defaultValue='Huye' />
         </div>
         <div className='relative flex items-center w-full mt-4 lg:w-2/12 lg:mt-0'>
           <MapPin className='absolute ml-1' />
-          <input type='text' placeholder='To' className='w-full h-20 pl-12 rounded-md' value='Kigali' />
+          <input type='text' placeholder='To' className='w-full h-20 pl-12 rounded-md' defaultValue='Kigali' />
         </div>
 
         <DatePicker

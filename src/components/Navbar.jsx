@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Logo } from '../assets';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaPlusCircle } from 'react-icons/fa';
+import { FaSearch, FaPlusCircle, FaCar, FaUserShield, FaUserGraduate, FaShieldAlt } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <header className='shadow-lg bg-secondary bg-opacity-5'>
-      <div className='container flex items-center justify-between h-24 mx-auto'>
+      <div className='container flex items-center justify-between h-24 px-6 mx-auto'>
         <Link to='/' className='flex items-center justify-center'>
           <img className='h-16' src={Logo} alt='Logo' />
         </Link>
@@ -25,7 +25,7 @@ const Navbar = () => {
         {/* Navbar for larger screens */}
         <nav className='items-center hidden text-base font-semibold md:flex'>
           <ul className='flex items-center text-floor'>
-            <li className='p-5 xl:p-8 active'>
+            <li className='p-5 xl:p-8'>
               <Link to='/'>Home</Link>
             </li>
             <li className='flex items-center p-5 space-x-2 xl:p-8'>
@@ -43,24 +43,28 @@ const Navbar = () => {
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
             >
-              <Link className='focus:outline-none'>How it works</Link>
+              <Link className='cursor-pointer focus:outline-none'>How it works</Link>
               {dropdownOpen && (
                 <ul
-                  className='absolute right-0 z-10 mt-2 bg-white border rounded shadow-lg top-full'
+                  className='absolute right-0 z-10 mt-2 bg-white border rounded shadow-lg top-full min-w-[200px]'
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
-                  <li className='px-4 py-2 hover:bg-gray-100'>
-                    <Link to='#'>For drivers</Link>
+                  <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                    <FaCar className='mr-2' />
+                    <Link to='/drivers'>For drivers</Link>
                   </li>
-                  <li className='px-4 py-2 hover:bg-gray-100'>
-                    <Link to='#'>For passengers</Link>
+                  <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                    <FaUserShield className='mr-2' />
+                    <Link to='/passengers'>For passengers</Link>
                   </li>
-                  <li className='px-4 py-2 hover:bg-gray-100'>
-                    <Link to='#'>Carpool for the Planet</Link>
+                  <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                    <FaShieldAlt className='mr-2' />
+                    <Link to='/trust-safety'>Trust & Safety</Link>
                   </li>
-                  <li className='px-4 py-2 hover:bg-gray-100'>
-                    <Link to='#'>For students</Link>
+                  <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                    <FaUserGraduate className='mr-2' />
+                    <Link to='/students'>For students</Link>
                   </li>
                 </ul>
               )}
@@ -75,7 +79,7 @@ const Navbar = () => {
           </button>
           {menuOpen && (
             <div className='absolute right-0 p-4 mt-2 bg-white shadow-md top-24'>
-              {/* You can use the same links here as in the larger screen navbar */}
+              {/* Same links as in the larger screen navbar */}
               <ul className='text-floor'>
                 <li className='mb-2'>
                   <Link to='/'>Home</Link>
@@ -91,24 +95,28 @@ const Navbar = () => {
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
-                  <button className='focus:outline-none'>How it works</button>
+                  <button className='cursor-pointer focus:outline-none'>How it works</button>
                   {dropdownOpen && (
                     <ul
-                      className='absolute right-0 z-10 mt-2 bg-white border rounded shadow-lg top-full'
+                      className='absolute right-0 z-10 mt-2 bg-white border rounded shadow-lg top-full min-w-[200px]'
                       onMouseEnter={() => setDropdownOpen(true)}
                       onMouseLeave={() => setDropdownOpen(false)}
                     >
-                      <li className='px-4 py-2 hover:bg-gray-100'>
-                        <Link to='#'>For drivers</Link>
+                      <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                        <FaCar className='mr-2' />
+                        <Link to='/drivers'>For drivers</Link>
                       </li>
-                      <li className='px-4 py-2 hover:bg-gray-100'>
-                        <Link to='#'>For passengers</Link>
+                      <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                        <FaUserShield className='mr-2' />
+                        <Link to='/passengers'>For passengers</Link>
                       </li>
-                      <li className='px-4 py-2 hover:bg-gray-100'>
-                        <Link to='#'>Carpool for the Planet</Link>
+                      <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                        <FaShieldAlt className='mr-2' />
+                        <Link to='/trust-safety'>Trust & Safety</Link>
                       </li>
-                      <li className='px-4 py-2 hover:bg-gray-100'>
-                        <Link to='#'>For students</Link>
+                      <li className='flex items-center px-4 py-2 hover:bg-gray-100'>
+                        <FaUserGraduate className='mr-2' />
+                        <Link to='/students'>For students</Link>
                       </li>
                     </ul>
                   )}
