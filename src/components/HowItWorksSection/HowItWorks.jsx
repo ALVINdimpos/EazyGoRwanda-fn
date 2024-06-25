@@ -1,298 +1,197 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FourthStep, HowItWork, SecondStep, ThirdStep } from '../../assets';
-import { FirstStep } from '../../assets';
-import './HowItWorks.css';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FirstStep, SecondStep, ThirdStep, FourthStep, HowItWork } from '../../assets';
 
-export default function HowItWorks() {
-  const [active, setActive] = useState(0);
-
-  function handleClick(index) {
-    setActive(index);
-  }
-
-  const tabsOptions = [
-    {
-      title: 'For Passenger',
-      link: '/',
-      content: (
-        <>
-          {/* Content for a Passanger */}
-          <div className='first-container'>
-            <span className='steps-svg first-svg'>
-              <img src={FirstStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Request A Ride</span>
-            <br />
-            <span className='text-base text-gray-600'>
-              Have to reach office or going for shopping? <br /> Just put current location and destination and search a
-              ride that suits you.
-            </span>
-            <br />
-            <span className='steps-svg third-svg'>
-              <img src={SecondStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Instant Notifications</span>
-            <br />
-            <span className='text-base text-right text-gray-600 post-a-ride'>
-              Gent instant notifications for your rides and be in contact with fellow riders all the time
-            </span>
-          </div>
-          <div className='phone-icon'>
-            <div className='how-it-works-svg'>
-              <img src={HowItWork} alt='mockup' className='h-[480px]' />
-            </div>
-          </div>
-          <div className='second-container'>
-            <div className='second-svg'>
-              <span className='steps-svg'>
-                <img src={ThirdStep} alt='mockup' className='h-[55px] pb-3' />
-              </span>
-              <span className='text-base font-black text-left uppercase'>Post A Ride</span>
-              <br />
-              <span className='text-base text-right text-gray-600'>
-                Going somewhere but hate to travel alone – <br /> just post your details and publish it
-              </span>
-            </div>
-            <span className='steps-svg fourth-svg'>
-              <img src={FourthStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-left uppercase'>Cashless Payment</span>
-            <br />
-            <span className='text-base text-right text-gray-600'>
-              Payment made easy by using your own Wallet – no more cash to carry
-            </span>
-          </div>
-        </>
-      ),
-      dots: (
-        <>
-          <div className='dots'>
-            <i className='text-green-600 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle'></i>
-          </div>
-        </>
-      ),
-    },
-    {
-      title: 'For a Driver',
-      link: '/',
-      content: (
-        <>
-          {/* Content for a Driver */}
-          <div className='first-container'>
-            <span className='steps-svg first-svg'>
-              <img src={FirstStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Find Passengers</span>
-            <br />
-            <span className='text-base text-gray-600'>
-              Looking to make some extra money? <br /> Accept ride requests from passengers looking for transportation.
-            </span>
-            <br />
-            <span className='steps-svg third-svg'>
-              <img src={SecondStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Earn Money</span>
-            <br />
-            <span className='text-base text-right text-gray-600 post-a-ride'>
-              Get paid for every completed trip. Earn additional bonuses based on your performance and customer ratings.
-            </span>
-          </div>
-          <div className='how-it-works-svg'>
-            <img src={HowItWork} alt='mockup' className='h-[480px]' />
-          </div>
-          <div className='second-container'>
-            <div className='second-svg'>
-              <span className='steps-svg'>
-                <img src={ThirdStep} alt='mockup' className='h-[55px] pb-3' />
-              </span>
-              <span className='text-base font-black text-left uppercase'>Set Your Schedule</span>
-              <br />
-              <span className='text-base text-right text-gray-600'>
-                Drive when it is convenient for you. Set your own schedule and availability to maximize your earnings.
-              </span>
-            </div>
-            <span className='steps-svg fourth-svg'>
-              <img src={FourthStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-left uppercase'>Cashless Transactions</span>
-            <br />
-            <span className='text-base text-right text-gray-600'>
-              Accept cashless payments from passengers. No need to handle cash, making transactions safer and more
-              convenient.
-            </span>
-          </div>
-        </>
-      ),
-      dots: (
-        <>
-          <div className='dots'>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-600 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle'></i>
-          </div>
-        </>
-      ),
-    },
-    {
-      title: 'Trust & Safety',
-      link: '/',
-      content: (
-        <>
-          {/* Content for Trust & Safety */}
-          <div className='first-container'>
-            <span className='steps-svg first-svg'>
-              <img src={FirstStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Driver Background Checks</span>
-            <br />
-            <span className='text-base text-gray-600'>
-              Ensuring drivers meet safety standards through thorough background checks and verification processes.
-            </span>
-            <br />
-            <span className='steps-svg third-svg'>
-              <img src={SecondStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Real-time GPS Tracking</span>
-            <br />
-            <span className='text-base text-right text-gray-600 post-a-ride'>
-              Providing real-time GPS tracking for all rides to enhance safety and security for both drivers and
-              passengers.
-            </span>
-          </div>
-          <div className='how-it-works-svg'>
-            <img src={HowItWork} alt='mockup' className='h-[480px]' />
-          </div>
-          <div className='second-container'>
-            <div className='second-svg'>
-              <span className='steps-svg'>
-                <img src={ThirdStep} alt='mockup' className='h-[55px] pb-3' />
-              </span>
-              <span className='text-base font-black text-left uppercase'>24/7 Customer Support</span>
-              <br />
-              <span className='text-base text-right text-gray-600'>
-                Access to round-the-clock customer support for assistance with any issues or concerns during rides.
-              </span>
-            </div>
-            <span className='steps-svg fourth-svg'>
-              <img src={FourthStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-left uppercase'>Emergency Assistance Button</span>
-            <br />
-            <span className='text-base text-right text-gray-600'>
-              Incorporating an emergency assistance button in the app for immediate help during critical situations.
-            </span>
-          </div>
-        </>
-      ),
-      dots: (
-        <>
-          <div className='dots'>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-600 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle'></i>
-          </div>
-        </>
-      ),
-    },
-    {
-      title: 'Sustainability',
-      link: '/',
-      content: (
-        <>
-          {/* Content for Sustainability */}
-          <div className='first-container'>
-            <span className='steps-svg first-svg'>
-              <img src={FirstStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Eco-Friendly Practices</span>
-            <br />
-            <span className='text-base text-gray-600'>
-              Promoting eco-friendly transportation options such as carpooling to reduce carbon emissions.
-            </span>
-            <br />
-            <span className='steps-svg third-svg'>
-              <img src={SecondStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-right uppercase'>Vehicle Maintenance</span>
-            <br />
-            <span className='text-base text-right text-gray-600 post-a-ride'>
-              Regular maintenance and inspections to ensure vehicles are fuel-efficient and environmentally friendly.
-            </span>
-          </div>
-          <div className='how-it-works-svg'>
-            <img src={HowItWork} alt='mockup' className='h-[480px]' />
-          </div>
-          <div className='second-container'>
-            <div className='second-svg'>
-              <span className='steps-svg'>
-                <img src={ThirdStep} alt='mockup' className='h-[55px] pb-3' />
-              </span>
-              <span className='text-base font-black text-left uppercase'>Renewable Energy Usage</span>
-              <br />
-              <span className='text-base text-right text-gray-600'>
-                Exploring and implementing renewable energy sources to power our platform and reduce our carbon
-                footprint.
-              </span>
-            </div>
-            <span className='steps-svg fourth-svg'>
-              <img src={FourthStep} alt='mockup' className='h-[55px] pb-3' />
-            </span>
-            <span className='text-base font-extrabold text-left uppercase'>Environmental Impact</span>
-            <br />
-            <span className='text-base text-right text-gray-600'>
-              Continuously assessing and improving our sustainability practices to minimize environmental impact.
-            </span>
-          </div>
-        </>
-      ),
-      dots: (
-        <>
-          <div className='dots'>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-300 fa-solid fa-circle pe-1'></i>
-            <i className='text-green-600 fa-solid fa-circle'></i>
-          </div>
-        </>
-      ),
-    },
-  ];
+const Step = ({ icon, title, description, position }) => {
+  const positionClasses = {
+    top: 'top-0 left-[40%] -translate-x-1/2 -translate-y-[calc(100%+2rem)]',
+    left: 'top-[40%] left-0 -translate-y-1/2 -translate-x-[calc(100%+2rem)]',
+    right: 'top-[40%] right-0 -translate-y-1/2 translate-x-[calc(100%+2rem)]',
+    bottom: 'bottom-[-1rem] left-[40%] -translate-x-1/2 translate-y-[calc(100%+2rem)] ',
+  };
 
   return (
-    <div className='min-h-screen ' id='HowItWorks'>
-      <div className='pt-10 HowItWorks'>
-        <h1 className='pb-6 text-2xl font-semibold text-center uppercase'>
-          How <span className='eazy-go'>TegaRide</span> Works
-        </h1>
-        <p className='max-w-2xl pb-12 mb-6 font-light text-center text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400'>
-          Download and install the TegaRide app. Enter your phone number and make your user account. When approved, you
-          must start driving.
-        </p>
-        <div className='flex flex-wrap justify-center pb-3 options'>
-          {tabsOptions.map((tabOption, index) => (
-            <div className='option-wrapper' key={index}>
-              <Link
-                to={tabOption.link}
-                className={`font-semibold pe-8 text-lg ${active === index ? 'active-link' : ''}`}
-                onClick={() => handleClick(index)}
-              >
-                {tabOption.title}
-              </Link>
-            </div>
+    <motion.div
+      className={`absolute w-64 p-4 bg-white rounded-lg shadow-lg ${positionClasses[position]}`}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <img src={icon} alt={title} className='w-12 h-12 mx-auto mb-2' />
+      <h3 className='mb-2 text-lg font-bold text-center'>{title}</h3>
+      <p className='text-sm text-center text-gray-600'>{description}</p>
+    </motion.div>
+  );
+};
+
+const Content = ({ steps }) => (
+  <div className='relative w-full max-w-5xl mx-auto h-[700px] my-16'>
+    <div className='absolute flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 rounded-full top-1/2 left-1/2 w-80 h-80'>
+      <img src={HowItWork} alt='TegaRide App' className='w-64 h-64' />
+    </div>
+    {steps.map((step, index) => (
+      <Step key={index} {...step} position={['top', 'left', 'right', 'bottom'][index]} />
+    ))}
+  </div>
+);
+
+const tabs = [
+  {
+    title: 'For Passenger',
+    steps: [
+      {
+        icon: FirstStep,
+        title: 'Request A Ride',
+        description: 'Enter your location and destination to find a suitable ride.',
+      },
+      {
+        icon: SecondStep,
+        title: 'Instant Notifications',
+        description: 'Receive real-time updates and stay connected with your driver.',
+      },
+      {
+        icon: ThirdStep,
+        title: 'Track Your Ride',
+        description: 'Follow your ride in real-time and share your trip details for safety.',
+      },
+      {
+        icon: FourthStep,
+        title: 'Cashless Payment',
+        description: 'Enjoy convenient, cashless transactions using your TegaRide wallet.',
+      },
+    ],
+  },
+  {
+    title: 'For Driver',
+    steps: [
+      {
+        icon: FirstStep,
+        title: 'Find Passengers',
+        description: 'Accept ride requests from nearby passengers looking for transportation.',
+      },
+      {
+        icon: SecondStep,
+        title: 'Earn Money',
+        description: 'Get paid for completed trips and earn bonuses based on your performance.',
+      },
+      {
+        icon: ThirdStep,
+        title: 'Set Your Schedule',
+        description: "Enjoy the flexibility of driving when it's convenient for you.",
+      },
+      {
+        icon: FourthStep,
+        title: 'Cashless Transactions',
+        description: 'Receive payments directly to your account, no cash handling required.',
+      },
+    ],
+  },
+  {
+    title: 'Trust & Safety',
+    steps: [
+      {
+        icon: FirstStep,
+        title: 'Driver Verification',
+        description: 'All drivers undergo thorough background checks and verification processes.',
+      },
+      {
+        icon: SecondStep,
+        title: 'Real-time GPS Tracking',
+        description: 'Every ride is tracked in real-time for enhanced safety and security.',
+      },
+      {
+        icon: ThirdStep,
+        title: '24/7 Support',
+        description: 'Access round-the-clock customer support for any issues or concerns.',
+      },
+      {
+        icon: FourthStep,
+        title: 'Emergency Assistance',
+        description: 'Use the in-app emergency button for immediate help in critical situations.',
+      },
+    ],
+  },
+  {
+    title: 'Sustainability',
+    steps: [
+      {
+        icon: FirstStep,
+        title: 'Eco-Friendly Practices',
+        description: 'We promote carpooling and other green transportation options.',
+      },
+      {
+        icon: SecondStep,
+        title: 'Vehicle Maintenance',
+        description: 'Regular inspections ensure vehicles are fuel-efficient and eco-friendly.',
+      },
+      {
+        icon: ThirdStep,
+        title: 'Renewable Energy',
+        description: "We're exploring renewable energy sources to power our platform.",
+      },
+      {
+        icon: FourthStep,
+        title: 'Environmental Impact',
+        description: 'We continuously assess and improve our sustainability practices.',
+      },
+    ],
+  },
+];
+
+function HowItWorks() {
+  const [activeTab, setActiveTab] = useState(0);
+
+  return (
+    <section className='py-16 overflow-hidden bg-gray-50' id='HowItWorks'>
+      <div className='container px-4 mx-auto'>
+        <motion.h2
+          className='mb-4 text-3xl font-bold text-center md:text-4xl'
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          How <span className='text-primary'>TegaRide</span> Works
+        </motion.h2>
+        <motion.p
+          className='max-w-2xl mx-auto mb-12 text-center text-gray-600'
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Download and install the TegaRide app. Enter your phone number and create your account. Once approved, you're
+          ready to start your journey with TegaRide.
+        </motion.p>
+
+        <div className='flex flex-wrap justify-center mb-8'>
+          {tabs.map((tab, index) => (
+            <button
+              key={index}
+              className={`px-4 py-2 m-2 rounded-full transition-all duration-300 ${
+                activeTab === index ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+              onClick={() => setActiveTab(index)}
+            >
+              {tab.title}
+            </button>
           ))}
         </div>
-        <div className='flex flex-wrap items-center justify-center steps-items'>
-          {/* Content based onactive index */}
-          {tabsOptions[active].content}
-        </div>
-        {tabsOptions[active].dots}
+
+        <AnimatePresence mode='wait'>
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Content steps={tabs[activeTab].steps} />
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 }
+
+export default HowItWorks;

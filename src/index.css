@@ -102,6 +102,8 @@ h1 {
 button,
 [type='reset'],
 [type='submit'] {
-  background-color: #75bf7a;
   background-image: none;
+}
+.top-navbar {
+  @apply text-green-700 font-extrabold text-lg 
 }
