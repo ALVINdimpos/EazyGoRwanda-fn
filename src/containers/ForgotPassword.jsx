@@ -1,15 +1,37 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/no-unescaped-entities */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleFormSubmit = async e => {
+    e.preventDefault();
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      // Example: Send email to backend for password reset
+      const response = await axios.post('/api/reset-password', { email });
+      setSuccessMessage(response.data.message); // Example: 'Reset instructions sent successfully'
+    } catch (error) {
+      setError('Failed to send reset instructions. Please try again later.');
+    }
+  };
+
   return (
-    <div className='max-w-md mx-auto mt-28'>
-      <div className='bg-white border border-gray-200 shadow-sm rounded-xl'>
+    <div className='max-w-md mx-auto mt-28 bg-gradient-to-tr from-green-50 via-green-100 to-green-100 '>
+      <div className='bg-white border  border-gray-200 shadow-sm rounded-xl'>
         <div className='p-4 sm:p-7'>
           <div className='text-center'>
-            <div className='inline-block p-2 mb-4 rounded-full bg-primary text-pr'>
+            <div className='inline-block p-2 mb-4 rounded-full bg-primary text-white'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='w-6 h-6'
@@ -26,12 +48,12 @@ const ForgotPassword = () => {
               </svg>
             </div>
             <h1 className='block text-2xl font-bold text-gray-800'>Forgot password?</h1>
-            <p className='mt-2 text-sm text-gray-600'>Don't worry we'll send you reset instructions.</p>
+            <p className='mt-2 text-sm text-gray-600'>Don't worry, we'll send you reset instructions.</p>
           </div>
 
           <div className='mt-6'>
             {/* Form */}
-            <form>
+            <form onSubmit={handleFormSubmit}>
               <div className='grid gap-y-4'>
                 {/* Form Group */}
                 <div>
@@ -40,39 +62,45 @@ const ForgotPassword = () => {
                   </label>
                   <div className='relative'>
                     <input
-                      value='invalidemail'
                       type='email'
                       id='email'
                       name='email'
-                      className='block w-full px-4 py-3 text-sm border border-gray-200 rounded-md outline-none peer bg-gray-50 ring-offset-1 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500'
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      className='block w-full px-4 py-3 text-sm border border-gray-200 rounded-md outline-none peer bg-gray-50 ring-offset-1 focus:ring-green-900  focus:ring-2'
                       required
                       aria-describedby='email-error'
                     />
-                    <div className='absolute right-0 items-center hidden px-3 pointer-events-none top-3 peer-invalid:flex'>
-                      <svg
-                        className='w-5 h-5 text-rose-500'
-                        width='16'
-                        height='16'
-                        fill='currentColor'
-                        viewBox='0 0 16 16'
-                        aria-hidden='true'
-                      >
-                        <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z' />
-                      </svg>
-                    </div>
-                    <p className='hidden mt-2 text-xs text-rose-600 peer-invalid:block' id='email-error'>
-                      Valid email address required for the account recovery process
-                    </p>
+                    {error && (
+                      <div className='absolute right-0 items-center hidden px-3 pointer-events-none top-3 peer-invalid:flex'>
+                        <svg
+                          className='w-5 h-5 text-rose-500'
+                          width='16'
+                          height='16'
+                          fill='currentColor'
+                          viewBox='0 0 16 16'
+                          aria-hidden='true'
+                        >
+                          <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z' />
+                        </svg>
+                      </div>
+                    )}
+                    {error && (
+                      <p className='hidden mt-2 text-xs text-rose-600 peer-invalid:block' id='email-error'>
+                        {error}
+                      </p>
+                    )}
                   </div>
                 </div>
                 {/* /Form Group */}
 
                 <button
                   type='submit'
-                  className='inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all border border-transparent rounded-md bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                  className='inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all border border-transparent rounded-md bg-primary hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-900 focus:ring-offset-2'
                 >
                   Reset password
                 </button>
+                {successMessage && <p className='mt-3 text-sm text-green-700'>{successMessage}</p>}
               </div>
             </form>
             {/* /Form */}
@@ -81,7 +109,6 @@ const ForgotPassword = () => {
       </div>
 
       <p className='flex items-center justify-center mt-3 text-center divide-x divide-gray-300'>
-        {/* <a className="pl-3 text-sm text-gray-600 decoration-2 hover:text-blue-600 hover:underline" href="#"> FAQs </a> */}
         <span className='inline pr-3 text-sm text-gray-600'>
           Remember your password?
           <Link className='font-medium text-primary decoration-2 hover:underline' to='/login'>
@@ -90,7 +117,7 @@ const ForgotPassword = () => {
           </Link>
         </span>
         <Link
-          className='pl-3 text-sm text-gray-600 decoration-2 hover:text-blue-600 hover:underline'
+          className='pl-3 text-sm text-gray-600 decoration-2 hover:text-primary hover:underline'
           href='#'
           target='_blank'
         >

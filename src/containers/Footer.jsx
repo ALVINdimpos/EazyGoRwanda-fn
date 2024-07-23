@@ -7,16 +7,17 @@ const Footer = () => {
     <div className='flex items-center justify-center w-full min-h-screen bg-black'>
       <div className='flex flex-col w-full px-4 text-white md:w-2/3'>
         <div className='w-full font-bold text-7xl'>
-          <h1 className='w-full md:w-2/3'>How can we help you. get in touch</h1>
+          <h1 className='w-full md:w-2/3 text-6xl'>How can we help you. get in touch</h1>
         </div>
         <div className='flex flex-col mt-8 md:flex-row md:justify-between'>
           <p className='w-full text-gray-400 md:w-2/3'>
-            Our high standards keep members safe. We make it simple to get to know more about a member before you travel
-            and have a zero-tolerance policy on abuse. Plus, our support team is available seven days a week.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit numquam neque dicta rem totam earum
+            iste a assumenda obcaecati perspiciatis asperiores doloribus, illum in expedita eveniet fugit ad.
+            Cupiditate, sit!
           </p>
           <div className='pt-6 w-44 md:pt-0'>
             <Link
-              to='/contact-us'
+              to='/Contact-us'
               className='flex items-center justify-center px-10 py-3 text-center rounded-lg shadow bg-primary'
             >
               Contact US
@@ -26,20 +27,20 @@ const Footer = () => {
         <div className='flex flex-col'>
           <div className='flex flex-row justify-between mt-24 mb-12'>
             <div className=''></div>
-            <a href='#About-us' className='hidden text-gray-600 uppercase cursor-pointer md:block hover:text-white'>
-              About
+            <a href='#' className='hidden text-gray-500  cursor-pointer md:block hover:text-white'>
+              Home
             </a>
-            <Link to='/New-parts' className='hidden text-gray-600 uppercase cursor-pointer md:block hover:text-white'>
-              How it works
+            <Link to='/PostATrip' className='hidden text-gray-500  cursor-pointer md:block hover:text-white'>
+              Find a ride
             </Link>
-            <Link to='/Used-parts' className='hidden text-gray-600 uppercase cursor-pointer md:block hover:text-white'>
-              Login
+            <Link to='/Used-parts' className='hidden text-gray-500  cursor-pointer md:block hover:text-white'>
+              Post a ride
             </Link>
-            <Link to='/Body-parts' className='hidden text-gray-600 uppercase cursor-pointer md:block hover:text-white'>
-              Sign Up
+            <Link to='/Body-parts' className='hidden text-gray-500  cursor-pointer md:block hover:text-white'>
+              Sign in
             </Link>
-            <Link to='/Contact-us' className='hidden text-gray-600 uppercase cursor-pointer md:block hover:text-white'>
-              Contact
+            <Link to='/Contact-us' className='hidden text-gray-500  cursor-pointer md:block hover:text-white'>
+              Sign up
             </Link>
             <div className='flex flex-row items-center justify-between space-x-8'>
               <a>
@@ -77,7 +78,7 @@ const Footer = () => {
             </div>
           </div>
           <hr className='border-gray-600' />
-          <p className='w-full my-12 text-center text-gray-600'>Copyright © {currentYear} Alvin Coder</p>
+          <p className='w-full my-12 text-center text-gray-600'>Copyright © {currentYear} TegaRide</p>
         </div>
       </div>
     </div>

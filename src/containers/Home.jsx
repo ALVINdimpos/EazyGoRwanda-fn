@@ -16,7 +16,6 @@ const Home = () => {
       <HowItWorks />
       <Testimonials />
       <CarpoolSection />
-
       <Footer />
     </div>
   );

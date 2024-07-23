@@ -1,14 +1,38 @@
-import { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { FaStar, FaCar, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaCommentDots, FaCheckCircle } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  FaStar,
+  FaCar,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaUser,
+  FaCommentDots,
+  FaCheckCircle,
+  FaLuggageCart,
+  FaRoute,
+  FaChevronLeft,
+  FaChevronRight,
+  FaPaperPlane,
+} from 'react-icons/fa';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import Footer from './Footer';
 import Navbar from '../components/Navbar';
 import { CarpoolSection } from '../components';
+import 'leaflet/dist/leaflet.css';
 
 const TripDetails = () => {
   const { tripId } = useParams();
+  const [activeTab, setActiveTab] = useState('details');
+  const [currentReviewPage, setCurrentReviewPage] = useState(1);
+  const chatContainerRef = useRef(null);
+  const reviewsPerPage = 6;
 
-  // Dummy trip details data
+  const [chatMessages, setChatMessages] = useState([
+    { sender: 'Driver', message: 'Hello! Feel free to ask any questions about the trip.', timestamp: new Date() },
+  ]);
+  const [message, setMessage] = useState('');
+
   const tripDetails = {
     id: tripId,
     origin: 'New York',
@@ -17,18 +41,21 @@ const TripDetails = () => {
     availableSeats: 3,
     pricePerSeat: 50,
     car: 'Toyota Camry',
-    carMake: 'Toyota',
     carModel: 'Camry',
     carYear: 2020,
     carColor: 'Black',
-    carImage:
-      'https://rukminim2.flixcart.com/image/832/832/xif0q/vehicle-pull-along/7/g/h/toys-nano-pull-back-car-for-kids-black-zokato-2-original-imags9rdd4mvysur.jpeg?q=70&crop=false', // Placeholder image URL
+    carImage: 'https://i.pinimg.com/564x/56/8a/00/568a00627c69d6e428bd71ec3e376205.jpg',
     stops: ['Chicago', 'Denver'],
     luggageSize: 'Medium',
     tripDescription: 'A comfortable trip from New York to Los Angeles with a few stops along the way.',
+    route: [
+      { name: 'New York', lat: 40.7128, lng: -74.006 },
+      { name: 'Chicago', lat: 41.8781, lng: -87.6298 },
+      { name: 'Denver', lat: 39.7392, lng: -104.9903 },
+      { name: 'Los Angeles', lat: 34.0522, lng: -118.2437 },
+    ],
   };
 
-  // Dummy driver details data
   const driverDetails = {
     id: 123,
     name: 'John Doe',
@@ -40,7 +67,6 @@ const TripDetails = () => {
     contact: 'john.doe@example.com',
   };
 
-  // Dummy reviews data
   const reviews = [
     {
       id: 1,
@@ -60,156 +86,263 @@ const TripDetails = () => {
       comment: 'Average trip, could be better.',
       avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
     },
+    {
+      id: 4,
+      rating: 5,
+      comment: 'Excellent experience!',
+      avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
+    },
+    {
+      id: 5,
+      rating: 4,
+      comment: 'Very punctual and professional.',
+      avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
+    },
+    {
+      id: 6,
+      rating: 5,
+      comment: 'Highly recommended driver.',
+      avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
+    },
+    {
+      id: 7,
+      rating: 4,
+      comment: 'Good conversation, enjoyable trip.',
+      avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
+    },
   ];
-
-  const [message, setMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState([]);
 
   const handleSendMessage = () => {
     if (message.trim() === '') return;
-
-    // Add user message to the chat
-    setChatMessages([...chatMessages, { sender: 'Me', message }]);
-    // Here you can send the message to the server or driver
-    // and handle the response.
-
-    // Clear the message input
+    const newMessage = { sender: 'Passenger', message, timestamp: new Date() };
+    setChatMessages(prevMessages => [...prevMessages, newMessage]);
     setMessage('');
+
+    // Simulate driver's response
+    setTimeout(() => {
+      const driverResponse = {
+        sender: 'Driver',
+        message: "Thank you for your message. I'll get back to you shortly.",
+        timestamp: new Date(),
+      };
+      setChatMessages(prevMessages => [...prevMessages, driverResponse]);
+    }, 1000);
   };
 
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
+
+  const TabContent = ({ id, active, children }) => (
+    <AnimatePresence mode='wait'>
+      {active === id && (
+        <motion.div
+          key={id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
+  const totalReviewPages = Math.ceil(reviews.length / reviewsPerPage);
+  const displayedReviews = reviews.slice((currentReviewPage - 1) * reviewsPerPage, currentReviewPage * reviewsPerPage);
+
   return (
-    <>
+    <div className='min-h-screen bg-gray-100'>
       <Navbar />
-      <div className='container py-8 mx-auto'>
-        <div className='grid grid-cols-1 gap-8 lg:grid-cols-2'>
-          <div className='px-6 py-8 bg-white rounded-lg shadow-md'>
-            <h2 className='mb-4 text-3xl font-bold'>Trip Details</h2>
-            <div>
-              <p>
-                <FaMapMarkerAlt className='inline mr-2' />
-                <span className='font-bold'>Origin:</span> {tripDetails.origin}
-              </p>
-              <p>
-                <FaMapMarkerAlt className='inline mr-2' />
-                <span className='font-bold'>Destination:</span> {tripDetails.destination}
-              </p>
-              <p>
-                <FaCalendarAlt className='inline mr-2' />
-                <span className='font-bold'>Departure Date:</span> {tripDetails.departureDate}
-              </p>
-              <p>
-                <FaUser className='inline mr-2' />
-                <span className='font-bold'>Available Seats:</span> {tripDetails.availableSeats}
-              </p>
-              <p>
-                <FaCommentDots className='inline mr-2' />
-                <span className='font-bold'>Price Per Seat:</span> ${tripDetails.pricePerSeat}
-              </p>
-              <div className='flex items-center'>
-                <FaCar className='inline mr-2' />
-                <span className='mr-2 font-bold'>Car:</span>
-                <img src={tripDetails.carImage} alt={tripDetails.car} className='w-16 h-16 rounded-full' />
-                <p className='ml-2'>{tripDetails.car}</p>
-              </div>
-              <p>
-                <span className='font-bold'>Car Make:</span> {tripDetails.carMake}
-              </p>
-              <p>
-                <span className='font-bold'>Car Model:</span> {tripDetails.carModel}
-              </p>
-              <p>
-                <span className='font-bold'>Car Year:</span> {tripDetails.carYear}
-              </p>
-              <p>
-                <span className='font-bold'>Car Color:</span> {tripDetails.carColor}
-              </p>
-              <p>
-                <span className='font-bold'>Stops:</span> {tripDetails.stops.join(', ')}
-              </p>
-              <p>
-                <span className='font-bold'>Luggage Size:</span> {tripDetails.luggageSize}
-              </p>
-              <p>
-                <span className='font-bold'>Trip Description:</span> {tripDetails.tripDescription}
-              </p>
-            </div>
-          </div>
-          <div className='px-6 py-8 bg-white rounded-lg shadow-md'>
-            <h2 className='mb-4 text-3xl font-bold'>Driver Details</h2>
-            <div className='flex items-center mb-4'>
-              <img src={driverDetails.avatar} alt={driverDetails.name} className='w-16 h-16 rounded-full' />
-              <div className='ml-4'>
-                <p className='flex items-center'>
-                  <FaCheckCircle className='inline text-green-500' />
-                  <span className='ml-2 font-bold'>Name:</span> {driverDetails.name}
-                </p>
-                <p className='flex items-center'>
-                  <FaStar className='inline mr-2 text-yellow-500' />
-                  <span className='font-bold'>Rating:</span> {driverDetails.rating}
-                </p>
-                <p>
-                  <span className='font-bold'>Verified:</span> {driverDetails.isVerified ? 'Yes' : 'No'}
-                </p>
-              </div>
-            </div>
-            <p>
-              <span className='font-bold'>Bio:</span> {driverDetails.bio}
-            </p>
-            <p>
-              <span className='font-bold'>Trips Completed:</span> {driverDetails.tripsCompleted}
-            </p>
-            <button className='px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600'>
-              Contact Driver
-            </button>
-          </div>
-        </div>
+      <div className='container px-4 py-8 mx-auto mt-16'>
+        <h1 className='mb-8 text-4xl font-bold text-center'>Trip Details</h1>
 
-        <div className='px-6 py-8 mt-8 bg-white rounded-lg shadow-md'>
-          <h2 className='mb-4 text-3xl font-bold'>Reviews</h2>
-          {reviews.map(review => (
-            <div key={review.id} className='flex items-center mb-4'>
-              <img src={review.avatar} alt='avatar' className='w-10 h-10 mr-4 rounded-full' />
-              <div>
-                <div className='flex items-center mb-1'>
-                  <FaStar className='mr-1 text-yellow-500' />
-                  <span className='font-bold'>{review.rating}</span>
-                </div>
-                <p>{review.comment}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className='px-6 py-8 mt-8 bg-white rounded-lg shadow-md'>
-          <h2 className='mb-4 text-3xl font-bold'>Chat with Driver</h2>
-          <div className='h-64 p-4 overflow-y-auto border border-gray-300 rounded-lg'>
-            {chatMessages.map((msg, index) => (
-              <div key={index} className='mb-2'>
-                <strong>{msg.sender}:</strong> {msg.message}
-              </div>
+        <div className='overflow-hidden bg-white rounded-lg shadow-lg'>
+          <div className='flex border-b'>
+            {['details', 'driver', 'reviews', 'chat'].map(tab => (
+              <button
+                key={tab}
+                className={`flex-1 py-4 px-6 font-semibold ${activeTab === tab ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
             ))}
           </div>
-          <div className='flex mt-4'>
-            <input
-              type='text'
-              className='flex-grow p-2 border border-gray-300 rounded-l'
-              placeholder='Type your message...'
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-            />
-            <button className='px-4 text-white bg-blue-500 rounded-r' onClick={handleSendMessage}>
-              Send
-            </button>
+
+          <div className='p-6'>
+            <TabContent id='details' active={activeTab}>
+              <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+                <div>
+                  <h2 className='mb-4 text-2xl font-semibold'>Trip Information</h2>
+                  <div className='space-y-2'>
+                    <p>
+                      <FaMapMarkerAlt className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>From:</span> {tripDetails.origin}
+                    </p>
+                    <p>
+                      <FaMapMarkerAlt className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>To:</span> {tripDetails.destination}
+                    </p>
+                    <p>
+                      <FaCalendarAlt className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>Departure:</span> {tripDetails.departureDate}
+                    </p>
+                    <p>
+                      <FaUser className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>Available Seats:</span> {tripDetails.availableSeats}
+                    </p>
+                    <p>
+                      <FaCommentDots className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>Price Per Seat:</span> ${tripDetails.pricePerSeat}
+                    </p>
+                    <p>
+                      <FaLuggageCart className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>Luggage Size:</span> {tripDetails.luggageSize}
+                    </p>
+                    <p>
+                      <FaRoute className='inline mr-2 text-primary' />
+                      <span className='font-semibold'>Stops:</span> {tripDetails.stops.join(', ')}
+                    </p>
+                  </div>
+                  <div className='mt-4'>
+                    <h3 className='mb-2 text-xl font-semibold'>Trip Description</h3>
+                    <p>{tripDetails.tripDescription}</p>
+                  </div>
+                </div>
+                <div>
+                  <h2 className='mb-4 text-2xl font-semibold'>Vehicle Information</h2>
+                  <div className='p-4 mb-4 bg-gray-100 rounded-lg'>
+                    <div className='flex items-center mb-4'>
+                      <img src={tripDetails.carImage} alt='Car' className='w-32 h-20 mr-4 rounded' />
+                      <div>
+                        <p className='text-xl font-semibold'>{tripDetails.car}</p>
+                        <p>
+                          {tripDetails.carModel} - {tripDetails.carYear}
+                        </p>
+                        <p>{tripDetails.carColor}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className='mb-2 text-xl font-semibold'>Route Map</h3>
+                  <MapContainer center={[40.7128, -74.006]} zoom={4} className='w-full h-64'>
+                    <TileLayer
+                      url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                      attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+                    />
+                    {tripDetails.route.map((stop, index) => (
+                      <Marker key={index} position={[stop.lat, stop.lng]}>
+                        <Popup>{stop.name}</Popup>
+                      </Marker>
+                    ))}
+                  </MapContainer>
+                </div>
+              </div>
+            </TabContent>
+
+            <TabContent id='driver' active={activeTab}>
+              <div className='flex items-center mb-4'>
+                <img src={driverDetails.avatar} alt='Driver' className='w-20 h-20 mr-4 rounded-full' />
+                <div>
+                  <h2 className='text-2xl font-semibold'>{driverDetails.name}</h2>
+                  <p className='flex items-center'>
+                    <FaStar className='mr-2 text-yellow-500' /> {driverDetails.rating}
+                  </p>
+                  {driverDetails.isVerified && (
+                    <p className='flex items-center text-green-500'>
+                      <FaCheckCircle className='mr-2' /> Verified
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className='mt-4'>
+                <h3 className='mb-2 text-xl font-semibold'>Driver Bio</h3>
+                <p>{driverDetails.bio}</p>
+              </div>
+              <div className='mt-4'>
+                <h3 className='mb-2 text-xl font-semibold'>Contact Information</h3>
+                <p>{driverDetails.contact}</p>
+              </div>
+              <div className='mt-4'>
+                <h3 className='mb-2 text-xl font-semibold'>Trips Completed</h3>
+                <p>{driverDetails.tripsCompleted}</p>
+              </div>
+            </TabContent>
+
+            <TabContent id='reviews' active={activeTab}>
+              <div>
+                <h2 className='mb-4 text-2xl font-semibold'>Reviews</h2>
+                {displayedReviews.map(review => (
+                  <div key={review.id} className='p-4 mb-4 bg-gray-100 rounded-lg'>
+                    <div className='flex items-center mb-2'>
+                      <img src={review.avatar} alt='Reviewer' className='w-12 h-12 mr-4 rounded-full' />
+                      <div>
+                        <p className='font-semibold'>{review.comment}</p>
+                        <p className='flex items-center'>
+                          <FaStar className='mr-2 text-yellow-500' /> {review.rating}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className='flex justify-center mt-4 space-x-4'>
+                  <button
+                    className='px-4 py-2 font-semibold text-white bg-primary rounded'
+                    onClick={() => setCurrentReviewPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentReviewPage === 1}
+                  >
+                    <FaChevronLeft />
+                  </button>
+                  <button
+                    className='px-4 py-2 font-semibold text-white bg-primary rounded'
+                    onClick={() => setCurrentReviewPage(prev => Math.min(prev + 1, totalReviewPages))}
+                    disabled={currentReviewPage === totalReviewPages}
+                  >
+                    <FaChevronRight />
+                  </button>
+                </div>
+              </div>
+            </TabContent>
+
+            <TabContent id='chat' active={activeTab}>
+              <div className='flex flex-col h-[400px]'>
+                <div className='flex-grow overflow-y-auto mb-4 p-4 bg-gray-100 rounded' ref={chatContainerRef}>
+                  {chatMessages.map((msg, index) => (
+                    <div key={index} className={`mb-4 ${msg.sender === 'Driver' ? 'text-left' : 'text-right'}`}>
+                      <div
+                        className={`inline-block p-3 rounded-lg ${msg.sender === 'Driver' ? 'bg-blue-100' : 'bg-green-100'}`}
+                      >
+                        <p className='font-semibold'>{msg.sender}</p>
+                        <p>{msg.message}</p>
+                        <p className='text-xs text-gray-500'>{msg.timestamp.toLocaleTimeString()}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className='flex mt-4'>
+                  <input
+                    type='text'
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    onKeyPress={e => {
+                      if (e.key === 'Enter') {
+                        handleSendMessage();
+                      }
+                    }}
+                  />
+                  <button onClick={handleSendMessage}>Send</button>
+                </div>
+              </div>
+            </TabContent>
           </div>
         </div>
-
-        <button className='px-4 py-2 mt-8 text-white transition duration-300 bg-blue-500 rounded-lg hover:bg-blue-600'>
-          Book Now
-        </button>
       </div>
       <CarpoolSection />
       <Footer />
-    </>
+    </div>
   );
 };
 

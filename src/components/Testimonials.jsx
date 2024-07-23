@@ -1,112 +1,100 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import './Testimonials.css';
-import { picture } from '../assets';
-import { FaChevronCircleLeft } from 'react-icons/fa';
-import { FaChevronCircleRight } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaQuoteLeft } from 'react-icons/fa';
+import { testimonialStyles as styles } from './testimonials.styles';
+import { picture } from '../assets/';
+
 export default function Testimonials() {
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const nextSlide = () => {
-    setSlideIndex(prevIndex => (prevIndex + 1) % totalSlides);
-  };
-
-  const prevSlide = () => {
-    setSlideIndex(prevIndex => (prevIndex - 1 + totalSlides) % totalSlides);
-  };
-
-  // Dummy testimonial data
   const testimonials = [
     {
-      text: 'Fast and convenient. My go-to ride-hailing app!',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ex voluptates minus nesciunt veniam porro aliquid sed rem,',
       rating: 4,
+      image: 'https://i.pinimg.com/564x/90/1e/e6/901ee677605386e2c77304709d05997d.jpg',
       user: { name: 'John D', role: 'Director, Producer' },
     },
     {
-      text: 'Friendly drivers and easy booking process.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ex voluptates minus nesciunt veniam porro aliquid sed. ',
       rating: 4,
+      image: 'https://i.pinimg.com/564x/26/bd/36/26bd368b868b25717a3cd1c45b8574f8.jpg',
       user: { name: 'Jane S', role: 'Writer' },
     },
     {
-      text: "This is the best app I've used so far",
-      rating: 5,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ex voluptates minus nesciunt veniam porro aliquid sed',
+      rating: 2,
+      image: 'https://i.pinimg.com/564x/37/d7/c9/37d7c9757fd0518ba46931e1756527a3.jpg',
       user: { name: 'Alice M', role: 'Designer' },
     },
     {
-      text: 'I really needed this for sure.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ex voluptates minus nesciunt veniam porro aliquid sed',
       rating: 4,
+      image: 'https://i.pinimg.com/564x/56/c9/ec/56c9eca1c822c9986ed9e828da6ba7c4.jpg',
       user: { name: 'Bob A', role: 'Engineer' },
     },
     {
-      text: 'I really needed this for sure.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ex voluptates minus nesciunt veniam porro aliquid sed',
       rating: 5,
-      user: { name: 'Bob A', role: 'Engineer' },
+      image: 'https://i.pinimg.com/564x/98/03/c3/9803c3db23178e2615e53703d406bf08.jpg',
+      user: { name: 'Emma L', role: 'Marketing Manager' },
     },
     {
-      text: 'I really needed this for sure.',
-      rating: 4,
-      user: { name: 'Bob A', role: 'Engineer' },
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ex voluptates minus nesciunt veniam porro aliquid sed.',
+      rating: 2,
+      image: 'https://i.pinimg.com/564x/ad/2f/9f/ad2f9f90dd326cff183c2ce85e67f93f.jpg',
+      user: { name: 'Michael R', role: 'Entrepreneur' },
     },
   ];
 
-  const totalSlides = Math.ceil(testimonials.length / 3);
+  const testimonialsPerPage = 3;
+  const pageCount = Math.ceil(testimonials.length / testimonialsPerPage);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPage(prevPage => (prevPage + 1) % pageCount);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [pageCount]);
 
   return (
-    <div id='parent'>
-      <div id='child1' className='my-10 bg-transparent col-span-full'>
-        <h5 id='h5'>Testimonials from our members</h5>
-        <span>
-          Embrace life's vastness, venture forth, and discover the wonders waiting beyond. The world beckons; seize its
-          grand offerings now!
-        </span>
-        <div className='flex items-center gap-10 mt-1'>
-          <button
-            onClick={prevSlide}
-            disabled={slideIndex === 0}
-            className='p-2 font-bold text-white rounded-full focus:outline-none focus:shadow-outline'
-            style={{ marginRight: '-10px' }}
-          >
-            <FaChevronCircleLeft className='text-xl' />
-          </button>
-          <button
-            onClick={nextSlide}
-            disabled={slideIndex === totalSlides - 1}
-            className='p-2 font-bold text-white rounded-full focus:outline-none focus:shadow-outline'
-            style={{ marginLeft: '-10px' }}
-          >
-            <FaChevronCircleRight className='text-xl' />
-          </button>
-        </div>
+    <section className={styles.container}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Voices of Our Community</h2>
+        <p className={styles.subtitle}>Discover what our members have to say about their TegaRide experiences.</p>
       </div>
-      <div id='child2'>
-        {testimonials.slice(slideIndex * 3, slideIndex * 3 + 3).map((testimonial, index) => (
-          <div key={index} className={`slide slide${index}`}>
-            <div className='quotation-mark'>“</div>
-            <span>{testimonial.text}</span>
-            <div className='rating'>
-              {[...Array(testimonial.rating)].map((_, i) => (
-                <span key={i} className='star'>
-                  &#9733;
-                </span>
-              ))}
-              {[...Array(5 - testimonial.rating)].map((_, i) => (
-                <span key={i} className='star empty'>
-                  &#9733;
-                </span>
-              ))}
-            </div>
-            <div className='redLine'></div>
-            <div className='user'>
-              <img src={picture} alt='Image' className='image1' />
-              <div className='user1'>
-                <span>{testimonial.user.name}</span>
-                <span className='role'>{testimonial.user.role}</span>
+
+      <div className={styles.testimonialsGrid}>
+        {testimonials
+          .slice(currentPage * testimonialsPerPage, (currentPage + 1) * testimonialsPerPage)
+          .map((testimonial, index) => (
+            <div key={index} className={styles.testimonialCard}>
+              <div className={styles.hexagonWrapper}>
+                <div className={styles.ratingContainer}>
+                  {[...Array(1)].map((_, i) => (
+                    <span key={i} className={styles.userImage}>
+                      <img src={testimonial.image} alt={testimonial.user.name} />
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <p className={styles.testimonialText}>
+                <FaQuoteLeft className='text-green-600 mr-2' />
+                {testimonial.text}
+              </p>
+              <div className={styles.ratingContainer}>
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className={styles.star}>
+                    {i < testimonial.rating ? '★' : '☆'}
+                  </span>
+                ))}
+              </div>
+              <div className={styles.userInfo}>
+                <p className={styles.userName}>{testimonial.user.name}</p>
+                <p className={styles.userRole}>{testimonial.user.role}</p>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
-    </div>
+    </section>
   );
 }

@@ -3,20 +3,20 @@ import Footer from './Footer';
 import CarpoolSection from '../components/CarpoolSection';
 import SecurePayment from '../assets/secure_payments.svg';
 import ReviewDriver from '../assets/review_driver.svg';
-import { FaCarTunnel } from 'react-icons/fa6';
 import { PiNumberOneFill } from 'react-icons/pi';
 import { PiNumberTwoFill } from 'react-icons/pi';
 import { PiNumberThreeFill } from 'react-icons/pi';
+import { IoPeopleCircle } from 'react-icons/io5';
 
 const Passengers = () => {
   return (
     <>
       <Navbar />
-      <div className='container p-6 mx-auto'>
+      <div className='container p-6 mt-14 mx-auto'>
         {/* For passenger Section */}
         <div className='mb-12 text-center'>
           <div className='flex justify-center'>
-            <FaCarTunnel className='mb-4 text-6xl text-primary' />
+            <IoPeopleCircle className='mb-4 text-6xl text-primary' />
           </div>
           <h1 className='text-4xl font-bold'>For passengers</h1>
           <p className='mt-2 text-xl'>

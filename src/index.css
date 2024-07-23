@@ -4,9 +4,9 @@
 
 @layer base {
   :root {
-    --primary: #75bf7a;
+    --primary: #15803d;
     --secondary: #ffffff;
-    --tertiary: #f9f9f9;
+    --tertiary: #f0fdfa;
     --floor: #000000;
   }
 
@@ -102,6 +102,8 @@ h1 {
 button,
 [type='reset'],
 [type='submit'] {
-  background-color: #75bf7a;
   background-image: none;
+}
+.top-navbar {
+  @apply text-green-700 font-extrabold text-lg 
 }
