@@ -25,7 +25,7 @@ const Choose = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-green-50'>
+    <div id='top-nav' className='flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-green-50'>
       <Navbar />
       <main className='flex items-center justify-center flex-grow px-4 py-16 mt-12'>
         <div className='w-full max-w-4xl'>

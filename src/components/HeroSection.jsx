@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaDownload, FaMapMarkerAlt, FaCalendarAlt, FaSearch } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Hero } from '../assets';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { DatePicker } from 'antd';
+import moment from 'moment';
+import { ImAndroid } from 'react-icons/im';
 
 const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -14,33 +18,33 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className='relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-100 to-green-100 dark:from-gray-900 dark:to-gray-800'>
-      <div className='container px-4 py-16 mx-auto lg:py-24'>
-        <div className='grid items-center gap-8 lg:grid-cols-12'>
+    <section className='relative min-h-screen overflow-hidden bg-gray-900 bg-opacity-95'>
+      <div className='container mx-auto px-4 py-16 lg:py-24'>
+        <div className='grid lg:grid-cols-12 gap-8 items-center'>
           <motion.div
             className='lg:col-span-7'
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className='mb-6 text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
-              Your Journey, <span className='text-primary'>Your Way!</span>
+            <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white dark:text-white leading-tight'>
+              Safety <span className='text-primary'>Meets Savings</span>
             </h1>
-            <p className='mb-8 text-lg text-gray-700 md:text-xl dark:text-gray-300'>
+            <p className='text-lg md:text-xl text-gray-400 dark:text-gray-300 mb-8'>
               Welcome to TegaRide – where every ride is an experience. Enjoy seamless travel, hassle-free transactions,
               and the assurance of safety.
             </p>
             <div className='flex flex-wrap gap-4'>
               <Link
-                to=''
-                className='inline-flex items-center px-6 py-3 text-white transition duration-300 ease-in-out transform rounded-full bg-primary hover:bg-primary-600 hover:-translate-y-1 hover:shadow-lg'
+                to='/'
+                className='inline-flex items-center px-6 py-3 text-white bg-primary rounded-full hover:bg-primary-600 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg'
               >
-                <FaDownload className='mr-2' />
+                <ImAndroid className='mr-2' />
                 Download App
               </Link>
               <Link
-                to=''
-                className='inline-flex items-center px-6 py-3 transition duration-300 ease-in-out transform border-2 rounded-full text-primary border-primary hover:bg-primary hover:text-white hover:-translate-y-1 hover:shadow-lg'
+                to='./HowItWorks'
+                className='inline-flex items-center px-6 py-3 text-primary border-2 border-primary rounded-full hover:bg-primary hover:text-white transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg'
               >
                 How it works
                 <svg
@@ -58,7 +62,7 @@ const HeroSection = () => {
               </Link>
             </div>
           </motion.div>
-          <div className='hidden lg:col-span-5 lg:block'>
+          <div className='lg:col-span-5 hidden lg:block'>
             <motion.img
               src={Hero}
               alt='TegaRide'
@@ -77,73 +81,133 @@ const HeroSection = () => {
 };
 
 const SearchComponent = () => {
-  const [searchParams, setSearchParams] = useState({
-    from: '',
-    to: '',
-    date: '',
-  });
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [date, setDate] = useState(null);
+  const navigate = useNavigate();
 
-  const handleChange = e => {
-    setSearchParams({ ...searchParams, [e.target.name]: e.target.value });
+  const handleSelectFrom = address => {
+    setFrom(address);
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success From:', latLng))
+      .catch(error => console.error('Error', error));
+  };
+
+  const handleSelectTo = address => {
+    setTo(address);
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success To:', latLng))
+      .catch(error => console.error('Error', error));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     // Handle search logic here
-    console.log('Search params:', searchParams);
+    console.log('Search params:', { from, to, date });
+    navigate('/travel');
+  };
+  const disablePastDates = current => {
+    return current && current < moment().startOf('day');
   };
 
   return (
     <motion.div
-      className='absolute bottom-0 left-0 right-0 bg-white shadow-2xl dark:bg-gray-800 rounded-t-3xl'
+      className='absolute bottom-6 left-12 right-12 bg-gray-900 bg-opacity-95 dark:bg-gray-00 rounded-3xl'
       initial={{ y: 100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      <form onSubmit={handleSubmit} className='container px-4 py-8 mx-auto'>
+      <form onSubmit={handleSubmit} className='container mx-auto px-4 py-8'>
         <div className='flex flex-wrap -mx-2'>
-          <div className='w-full px-2 mb-4 md:w-1/3 md:mb-0'>
+          <div className='w-full md:w-1/3 px-2 mb-4 md:mb-0'>
             <div className='relative'>
-              <FaMapMarkerAlt className='absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
-              <input
-                type='text'
-                name='from'
-                placeholder='From'
-                className='w-full py-2 pl-10 pr-3 border-2 border-gray-200 rounded-lg outline-none focus:border-primary'
-                onChange={handleChange}
-                value={searchParams.from}
-              />
+              <FaMapMarkerAlt className='absolute left-3 top-1/2 transform -translate-y-1/2 text-green-700 z-10' />
+              <PlacesAutocomplete
+                value={from}
+                onChange={setFrom}
+                onSelect={handleSelectFrom}
+                searchOptions={{ componentRestrictions: { country: 'RW' } }}
+              >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: 'From',
+                        className:
+                          'w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-300',
+                      })}
+                    />
+                    <div className='absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg'>
+                      {loading && <div className='p-2 text-gray-500'>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? 'p-2 bg-gray-100 cursor-pointer'
+                          : 'p-2 bg-white cursor-pointer';
+                        return (
+                          <div {...getSuggestionItemProps(suggestion, { className })} key={suggestion.placeId}>
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
             </div>
           </div>
-          <div className='w-full px-2 mb-4 md:w-1/3 md:mb-0'>
+          <div className='w-full md:w-1/3 px-2 mb-4 md:mb-0'>
             <div className='relative'>
-              <FaMapMarkerAlt className='absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
-              <input
-                type='text'
-                name='to'
-                placeholder='To'
-                className='w-full py-2 pl-10 pr-3 border-2 border-gray-200 rounded-lg outline-none focus:border-primary'
-                onChange={handleChange}
-                value={searchParams.to}
-              />
+              <FaMapMarkerAlt className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10' />
+              <PlacesAutocomplete
+                value={to}
+                onChange={setTo}
+                onSelect={handleSelectTo}
+                searchOptions={{ componentRestrictions: { country: 'RW' } }}
+              >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: 'To',
+                        className:
+                          'w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-300',
+                      })}
+                    />
+                    <div className='absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg'>
+                      {loading && <div className='p-2 text-gray-500'>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? 'p-2 bg-gray-100 cursor-pointer'
+                          : 'p-2 bg-white cursor-pointer';
+                        return (
+                          <div {...getSuggestionItemProps(suggestion, { className })} key={suggestion.placeId}>
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
             </div>
           </div>
-          <div className='w-full px-2 md:w-1/3'>
+          <div className='w-full md:w-1/3 px-2'>
             <div className='relative'>
-              <FaCalendarAlt className='absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
-              <input
-                type='date'
-                name='date'
-                className='w-full py-2 pl-10 pr-3 border-2 border-gray-200 rounded-lg outline-none focus:border-primary'
-                onChange={handleChange}
-                value={searchParams.date}
+              <FaCalendarAlt className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10 focus:border-green-700 focus:ring-2 focus:ring-green-700' />
+              <DatePicker
+                placeholder='Leaving time (optional)'
+                onChange={date => setDate(date)}
+                disabledDate={disablePastDates}
+                className='w-full pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 transition-all duration-300'
               />
             </div>
           </div>
         </div>
         <button
           type='submit'
-          className='w-full px-4 py-2 mt-4 text-white transition duration-300 ease-in-out transform rounded-lg bg-primary hover:bg-primary-600 hover:-translate-y-1 hover:shadow-lg'
+          className='w-full mt-4 bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-600 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg'
         >
           <FaSearch className='inline-block mr-2' />
           Find a Ride

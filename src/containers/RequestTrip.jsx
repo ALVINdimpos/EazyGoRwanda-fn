@@ -1,18 +1,33 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from '../components/Navbar';
-import Footer from './Footer';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import {
-  FaCar,
   FaMapMarkerAlt,
   FaCalendarAlt,
   FaUserFriends,
   FaInfoCircle,
-  FaStreetView,
-  FaRegLightbulb,
-  FaRegClock,
+  FaCar,
+  FaSearch,
+  FaSuitcase,
+  FaDollarSign,
 } from 'react-icons/fa';
+import Navbar from '../components/Navbar';
+import Footer from './Footer';
+
+const InputField = React.memo(({ icon: Icon, label, ...props }) => (
+  <div className='mb-4'>
+    <label className='block mb-1 text-sm font-medium text-gray-700'>
+      <Icon className='inline mr-2' />
+      {label}
+    </label>
+    <input
+      {...props}
+      className='w-full p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
+    />
+  </div>
+));
+
+InputField.displayName = 'InputField';
 
 const RequestTrip = () => {
   const [formData, setFormData] = useState({
@@ -20,9 +35,11 @@ const RequestTrip = () => {
     destination: '',
     leavingDate: '',
     seatsRequired: 1,
+    luggageSize: '',
     description: '',
+    minPrice: 0,
+    maxPrice: 100,
   });
-
   const [step, setStep] = useState(0);
   const [recentRequests, setRecentRequests] = useState([]);
 
@@ -35,35 +52,234 @@ const RequestTrip = () => {
     ]);
   }, []);
 
-  const handleChange = e => {
-    const { name, value } = e.target;
+  const handleChange = useCallback((name, value) => {
     setFormData(prevState => ({ ...prevState, [name]: value }));
-  };
+  }, []);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
-  };
-
-  const InputField = ({ icon: Icon, label, ...props }) => (
-    <div className='mb-4'>
-      <label className='block mb-1 text-sm font-medium text-gray-700'>
-        <Icon className='inline mr-2' />
-        {label}
-      </label>
-      <input
-        {...props}
-        className='w-full p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
-      />
-    </div>
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      console.log('Form submitted:', formData);
+      // Handle form submission here
+    },
+    [formData]
   );
 
-  const steps = [
-    { title: 'Trip Details', fields: ['origin', 'destination'] },
-    { title: 'Date & Seats', fields: ['leavingDate', 'seatsRequired'] },
-    { title: 'Additional Info', fields: ['description'] },
-  ];
+  const handleSelectOrigin = useCallback(
+    async address => {
+      try {
+        const results = await geocodeByAddress(address);
+        const latLng = await getLatLng(results[0]);
+        console.log('Success Origin:', latLng);
+        handleChange('origin', address);
+      } catch (error) {
+        console.error('Error', error);
+      }
+    },
+    [handleChange]
+  );
+
+  const handleSelectDestination = useCallback(
+    async address => {
+      try {
+        const results = await geocodeByAddress(address);
+        const latLng = await getLatLng(results[0]);
+        console.log('Success Destination:', latLng);
+        handleChange('destination', address);
+      } catch (error) {
+        console.error('Error', error);
+      }
+    },
+    [handleChange]
+  );
+
+  const steps = useMemo(
+    () => [
+      { title: 'Trip Details', fields: ['origin', 'destination'] },
+      { title: 'Date, Seats & Price', fields: ['leavingDate', 'seatsRequired', 'luggageSize', 'minPrice', 'maxPrice'] },
+      { title: 'Additional Info', fields: ['description'] },
+    ],
+    []
+  );
+
+  const renderStepContent = useCallback(() => {
+    switch (step) {
+      case 0:
+        return (
+          <>
+            <div className='mb-4'>
+              <label className='block mb-1 text-sm font-medium text-gray-700'>
+                <FaMapMarkerAlt className='inline text-primary mr-2' />
+                From
+              </label>
+              <PlacesAutocomplete
+                value={formData.origin}
+                onChange={value => handleChange('origin', value)}
+                onSelect={handleSelectOrigin}
+              >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: 'Enter origin',
+                        className:
+                          'w-full p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary',
+                      })}
+                    />
+                    <div className='absolute z-10 w-full bg-white rounded-md shadow-lg'>
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className: suggestion.active ? 'p-2 cursor-pointer bg-gray-100' : 'p-2 cursor-pointer',
+                          })}
+                          key={suggestion.placeId}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
+            <div className='mb-4'>
+              <label className='block mb-1 text-sm font-medium text-gray-700'>
+                <FaMapMarkerAlt className='inline text-primary mr-2' />
+                To
+              </label>
+              <PlacesAutocomplete
+                value={formData.destination}
+                onChange={value => handleChange('destination', value)}
+                onSelect={handleSelectDestination}
+              >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: 'Enter destination',
+                        className:
+                          'w-full p-3 transition duration-200 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary',
+                      })}
+                    />
+                    <div className='absolute z-10 w-full bg-white rounded-md shadow-lg'>
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className: suggestion.active ? 'p-2 cursor-pointer bg-gray-100' : 'p-2 cursor-pointer',
+                          })}
+                          key={suggestion.placeId}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
+            <div className='mb-4'>
+              <label className='block mb-1 text-sm font-semibold  text-gray-700'>
+                <FaDollarSign className='inline text-xl text-primary mb-2' />
+                Price Range (RWF)
+              </label>
+              <div className='flex items-center space-x-4'>
+                <input
+                  type='number'
+                  name='minPrice'
+                  value={formData.minPrice}
+                  onChange={e => handleChange('minPrice', parseInt(e.target.value))}
+                  className='w-1/4 p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
+                  min='0'
+                  max={formData.maxPrice}
+                />
+                <input
+                  type='range'
+                  name='priceRange'
+                  min='0'
+                  max='100000'
+                  step='500'
+                  value={formData.maxPrice}
+                  onChange={e => handleChange('maxPrice', parseInt(e.target.value))}
+                  className='w-1/2 accent-primary'
+                />
+                <input
+                  type='number'
+                  name='maxPrice'
+                  value={formData.maxPrice}
+                  onChange={e => handleChange('maxPrice', parseInt(e.target.value))}
+                  className='w-1/4 p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
+                  min={formData.minPrice}
+                />
+              </div>
+            </div>
+          </>
+        );
+      case 1:
+        return (
+          <>
+            <InputField
+              icon={FaCalendarAlt}
+              label='Leaving Date'
+              type='date'
+              name='leavingDate'
+              value={formData.leavingDate}
+              onChange={e => handleChange('leavingDate', e.target.value)}
+              required
+            />
+            <InputField
+              icon={FaUserFriends}
+              label='Seats Required'
+              type='number'
+              name='seatsRequired'
+              value={formData.seatsRequired}
+              onChange={e => handleChange('seatsRequired', e.target.value)}
+              min='1'
+              max='10'
+              required
+            />
+            <div className='mb-4'>
+              <label className='block mb-1 text-sm font-medium text-gray-700'>
+                <FaSuitcase className='inline mr-2' />
+                Luggage Size
+              </label>
+              <select
+                name='luggageSize'
+                value={formData.luggageSize}
+                onChange={e => handleChange('luggageSize', e.target.value)}
+                className='w-full p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
+                required
+              >
+                <option value=''>Select luggage size</option>
+                <option value='small'>Small</option>
+                <option value='medium'>Medium</option>
+                <option value='large'>Large</option>
+              </select>
+            </div>
+          </>
+        );
+      case 2:
+        return (
+          <div className='mb-4'>
+            <label className='block mb-1 text-sm font-medium text-gray-700'>
+              <FaInfoCircle className='inline mr-2' />
+              Description
+            </label>
+            <textarea
+              name='description'
+              value={formData.description}
+              onChange={e => handleChange('description', e.target.value)}
+              className='w-full p-3 transition duration-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
+              placeholder='Add any additional details about your trip'
+              rows='4'
+            ></textarea>
+          </div>
+        );
+      default:
+        return null;
+    }
+  }, [step, formData, handleChange, handleSelectOrigin, handleSelectDestination]);
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 to-green-50'>
@@ -90,15 +306,15 @@ const RequestTrip = () => {
               <h3 className='mb-4 text-xl font-semibold'>Trip Request Tips</h3>
               <ul className='space-y-3'>
                 <li className='flex items-start'>
-                  <FaStreetView className='mt-1 mr-2 text-primary' />
+                  <FaCar className='mt-1 mr-2 text-primary' />
                   <span>Be specific about your pick-up and drop-off locations.</span>
                 </li>
                 <li className='flex items-start'>
-                  <FaRegLightbulb className='mt-1 mr-2 text-primary' />
+                  <FaInfoCircle className='mt-1 mr-2 text-primary' />
                   <span>Mention any special requirements in the description.</span>
                 </li>
                 <li className='flex items-start'>
-                  <FaRegClock className='mt-1 mr-2 text-primary' />
+                  <FaCalendarAlt className='mt-1 mr-2 text-primary' />
                   <span>Request your trip in advance for better matches.</span>
                 </li>
               </ul>
@@ -155,77 +371,14 @@ const RequestTrip = () => {
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {step === 0 && (
-                      <>
-                        <InputField
-                          icon={FaMapMarkerAlt}
-                          label='From'
-                          type='text'
-                          name='origin'
-                          value={formData.origin}
-                          onChange={handleChange}
-                          placeholder='Enter origin'
-                          required
-                        />
-                        <InputField
-                          icon={FaMapMarkerAlt}
-                          label='To'
-                          type='text'
-                          name='destination'
-                          value={formData.destination}
-                          onChange={handleChange}
-                          placeholder='Enter destination'
-                          required
-                        />
-                      </>
-                    )}
-                    {step === 1 && (
-                      <>
-                        <InputField
-                          icon={FaCalendarAlt}
-                          label='Leaving Date'
-                          type='date'
-                          name='leavingDate'
-                          value={formData.leavingDate}
-                          onChange={handleChange}
-                          required
-                        />
-                        <InputField
-                          icon={FaUserFriends}
-                          label='Seats Required'
-                          type='number'
-                          name='seatsRequired'
-                          value={formData.seatsRequired}
-                          onChange={handleChange}
-                          min='1'
-                          max='10'
-                          required
-                        />
-                      </>
-                    )}
-                    {step === 2 && (
-                      <div className='mb-4'>
-                        <label className='block mb-1 text-sm font-medium text-gray-700'>
-                          <FaInfoCircle className='inline mr-2' />
-                          Description
-                        </label>
-                        <textarea
-                          name='description'
-                          value={formData.description}
-                          onChange={handleChange}
-                          className='w-full p-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent'
-                          placeholder='Add any additional details about your trip'
-                          rows='4'
-                        ></textarea>
-                      </div>
-                    )}
+                    {renderStepContent()}
                   </motion.div>
                 </AnimatePresence>
                 <div className='flex justify-between mt-6'>
                   {step > 0 && (
                     <button
                       type='button'
-                      onClick={() => setStep(step - 1)}
+                      onClick={() => setStep(prevStep => prevStep - 1)}
                       className='px-4 py-2 text-gray-700 transition duration-200 bg-gray-200 rounded-lg hover:bg-gray-300'
                     >
                       Back
@@ -234,7 +387,7 @@ const RequestTrip = () => {
                   {step < steps.length - 1 ? (
                     <button
                       type='button'
-                      onClick={() => setStep(step + 1)}
+                      onClick={() => setStep(prevStep => prevStep + 1)}
                       className='px-4 py-2 text-white transition duration-200 rounded-lg bg-primary hover:bg-primary-dark'
                     >
                       Next
@@ -261,11 +414,11 @@ const RequestTrip = () => {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <h2 className='mb-8 text-3xl font-bold'>Why Choose Our Service?</h2>
-          <div className='grid gap-6 md:grid-cols-3'>
+          <div className='grid gap-6 md:grid-cols-4'>
             <div className='p-6 bg-white rounded-lg shadow-lg'>
               <FaCar className='mx-auto mb-4 text-4xl text-primary' />
-              <h3 className='mb-2 text-xl font-semibold'>Reliable Drivers</h3>
-              <p>Our drivers are vetted and rated by the community for your safety.</p>
+              <h3 className='mb-2 text-xl font-semibold'>Wide Selection</h3>
+              <p>Choose from a variety of rides to fit your needs and budget.</p>
             </div>
             <div className='p-6 bg-white rounded-lg shadow-lg'>
               <FaUserFriends className='mx-auto mb-4 text-4xl text-primary' />
@@ -274,8 +427,13 @@ const RequestTrip = () => {
             </div>
             <div className='p-6 bg-white rounded-lg shadow-lg'>
               <FaCalendarAlt className='mx-auto mb-4 text-4xl text-primary' />
-              <h3 className='mb-2 text-xl font-semibold'>Flexible Scheduling</h3>
-              <p>Find rides that fit your schedule, or request custom trip times.</p>
+              <h3 className='mb-2 text-xl font-semibold'>Flexible Booking</h3>
+              <p>Easy to book, modify, or cancel your trips as needed.</p>
+            </div>
+            <div className='p-6 bg-white rounded-lg shadow-lg'>
+              <FaSearch className='mx-auto mb-4 text-4xl text-primary' />
+              <h3 className='mb-2 text-xl font-semibold'>Smart Matching</h3>
+              <p>Our algorithm finds the best matches for your travel needs.</p>
             </div>
           </div>
         </motion.section>

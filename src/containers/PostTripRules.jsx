@@ -43,7 +43,7 @@ const PostTripRules = () => {
   ];
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen'>
       <Navbar />
       <div className='container px-4 py-16 mx-auto mt-12'>
         <motion.div
@@ -55,7 +55,6 @@ const PostTripRules = () => {
           <h1 className='mb-4 text-4xl font-bold text-gray-800 md:text-5xl'>Rules for Posting a Trip</h1>
           <p className='text-xl text-gray-600'>Ensure a smooth and safe journey by following these guidelines.</p>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,7 +77,7 @@ const PostTripRules = () => {
               <input type='checkbox' className='sr-only' checked={agreed} onChange={() => setAgreed(!agreed)} />
               <div className={`w-10 h-6 bg-gray-300 rounded-full shadow-inner ${agreed ? 'bg-primary' : ''}`}></div>
               <div
-                className={`absolute w-4 h-4 bg-white rounded-full shadow inset-y-1 left-1 transition-transform ${agreed ? 'transform translate-x-full' : ''}`}
+                className={`absolute w-4 h-4 bg-white rounded-full shadow-lg inset-y-1 left-1 transition-transform ${agreed ? 'transform translate-x-full' : ''}`}
               ></div>
             </div>
             <span className='ml-3 text-lg text-gray-800'>

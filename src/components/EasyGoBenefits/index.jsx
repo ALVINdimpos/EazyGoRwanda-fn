@@ -29,8 +29,8 @@ const BenefitCard = ({ number, title, description, icon, reverse, style = false 
 
 function TegaRideBenefits() {
   return (
-    <section className='py-16 bg-gray-100'>
-      <div className='container px-4 mx-auto'>
+    <section className='py-16'>
+      <div className='container px-11 mx-auto '>
         <motion.h2
           className='mb-12 text-4xl font-bold text-center md:text-5xl'
           initial={{ opacity: 0, y: -50 }}
@@ -52,7 +52,7 @@ function TegaRideBenefits() {
 
           <BenefitCard
             number='02'
-            title='Increased Earnings'
+            title='24/7 Customer Support'
             description='By driving with TegaRide, you can earn more. Our platform connects you with passengers efficiently, maximizing your earning potential.'
             icon={icon2}
             style='ml-[500px]'
@@ -60,9 +60,10 @@ function TegaRideBenefits() {
 
           <BenefitCard
             number='03'
-            title='24/7 Customer Support'
+            title='Increased Earnings'
             description="TegaRide is a local service provider, and we're proud to support you in your local language. Our dedicated team is at your service 24/7, ensuring you always have the assistance you need."
             icon={icon3}
+            className='max-w-2'
             style='mr-[500px]'
           />
         </div>

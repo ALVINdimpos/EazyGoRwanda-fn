@@ -1,124 +1,77 @@
-/* eslint-disable react/prop-types */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, Search } from 'lucide-react';
-import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
-import { CarpoolSection } from '../components';
+import { Star, Clock, MapPin, Users, DollarSign, Car } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
-// Searched Component
-const Searched = () => {
-  const handleSubmit = e => {
-    e.preventDefault();
-    // Handle form submission
-  };
+import SearchNav from '../components/SearchNav';
+import { CarpoolSection } from '../components';
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className='w-full max-w-4xl mx-auto my-8 overflow-hidden bg-white rounded-lg shadow-lg'
-    >
-      <form onSubmit={handleSubmit} className='flex flex-wrap items-center p-4'>
-        <div className='w-full p-2 md:w-1/4'>
-          <div className='relative'>
-            <MapPin className='absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
-            <input
-              type='text'
-              placeholder='From'
-              className='w-full py-2 pl-10 pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary'
-              defaultValue='Huye'
-            />
-          </div>
-        </div>
-        <div className='w-full p-2 md:w-1/4'>
-          <div className='relative'>
-            <MapPin className='absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
-            <input
-              type='text'
-              placeholder='To'
-              className='w-full py-2 pl-10 pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary'
-              defaultValue='Kigali'
-            />
-          </div>
-        </div>
-        <div className='w-full p-2 md:w-1/4'>
-          <div className='relative'>
-            <Calendar className='absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2' />
-            <DatePicker
-              placeholder='Leaving date'
-              className='w-full py-2 pl-10 pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary'
-              defaultValue={dayjs()}
-            />
-          </div>
-        </div>
-        <div className='w-full p-2 md:w-1/4'>
-          <button
-            type='submit'
-            className='flex items-center justify-center w-full px-4 py-2 text-white transition duration-300 rounded-md bg-primary hover:bg-primary-dark'
-          >
-            <Search className='mr-2' />
-            Find a ride
-          </button>
-        </div>
-      </form>
-    </motion.div>
-  );
+const renderStars = rating => {
+  return [...Array(5)].map((_, i) => (
+    <Star key={i} className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
+  ));
 };
 
-// TripCard Component
 const TripCard = ({ driver, trip, car, price, seatsLeft }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className='mb-4 overflow-hidden transition duration-300 bg-white rounded-lg shadow-md hover:shadow-lg'
+      whileHover={{ scale: 1.02, boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}
+      className='w-full md:w-[calc(50%-1rem)] mb-4 overflow-hidden transition duration-300 bg-white rounded-lg shadow-md hover:shadow-lg focus:ring-2 focus:ring-green-900 focus:outline-none'
     >
-      <div className='grid grid-cols-1 gap-4 p-4 md:grid-cols-4'>
-        <div className='flex items-center'>
+      <div className='p-4'>
+        <div className='flex items-center mb-4'>
           <img src={driver.image} alt={driver.name} className='w-16 h-16 mr-4 rounded-full' />
           <div>
             <h3 className='text-lg font-semibold'>{driver.name}</h3>
-            <div className='text-sm text-gray-600'>
-              {driver.rating} • {driver.trips} trips
+            <div className='flex items-center'>
+              {renderStars(driver.rating)}
+              <span className='ml-2 text-sm text-gray-600'>{driver.rating.toFixed(1)}</span>
             </div>
+            <div className='text-sm text-gray-600'>{driver.trips} trips</div>
           </div>
         </div>
-        <div className='col-span-2'>
-          <h4 className='mb-2 text-lg font-semibold'>{trip.route}</h4>
-          <div className='mb-1 text-sm text-gray-600'>
-            <span className='font-semibold'>Leaving:</span> {trip.departure}
+        <h4 className='mb-2 text-lg font-semibold'>{trip.route}</h4>
+        <div className='flex items-center mb-1 text-sm text-gray-600'>
+          <Clock className='w-4 h-4 mr-2' />
+          <span>{trip.departure}</span>
+        </div>
+        <div className='flex items-center mb-1 text-sm text-gray-600'>
+          <MapPin className='w-4 h-4 mr-2' />
+          <span>Pickup: {trip.pickup}</span>
+        </div>
+        <div className='flex items-center mb-4 text-sm text-gray-600'>
+          <MapPin className='w-4 h-4 mr-2' />
+          <span>Dropoff: {trip.dropoff}</span>
+        </div>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center text-2xl font-bold text-primary'>
+            <DollarSign className='w-6 h-6 mr-1' />
+            {price}
           </div>
-          <div className='mb-1 text-sm text-gray-600'>
-            <span className='font-semibold'>Pickup:</span> {trip.pickup}
-          </div>
-          <div className='text-sm text-gray-600'>
-            <span className='font-semibold'>Dropoff:</span> {trip.dropoff}
+          <div className='flex items-center text-sm font-semibold'>
+            <Users className='w-4 h-4 mr-2' />
+            {seatsLeft} seats left
           </div>
         </div>
-        <div className='flex flex-col items-end justify-between'>
-          <div className='text-2xl font-bold text-primary'>${price}</div>
-          <div className='text-sm font-semibold'>{seatsLeft} seats left</div>
-        </div>
+        <button className='w-full px-4 py-2 mt-4 text-sm font-semibold text-white transition-all bg-primary rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'>
+          Book Now
+        </button>
       </div>
       <div className='flex items-center px-4 py-2 bg-gray-100'>
-        <img src={car.image} alt={car.model} className='w-12 h-12 mr-3 rounded' />
+        <Car className='w-5 h-5 mr-2 text-gray-600' />
         <div className='text-sm'>
-          <div className='font-semibold'>{car.model}</div>
-          <div className='text-gray-600'>{car.type}</div>
+          <span className='font-semibold'>{car.model}</span>
+          <span className='mx-2'>•</span>
+          <span className='text-gray-600'>{car.type}</span>
         </div>
       </div>
     </motion.div>
   );
 };
 
-// Travel Component
 const Travel = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
+  const tripsPerPage = 4;
 
   const trips = [
     {
@@ -126,8 +79,8 @@ const Travel = () => {
         name: 'Natalie',
         image:
           'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
-        rating: 5.0,
-        trips: 1,
+        rating: 4.5,
+        trips: 120,
       },
       trip: {
         route: 'Vancouver to Victoria',
@@ -137,33 +90,185 @@ const Travel = () => {
       },
       car: {
         model: 'Toyota Tacoma',
-        image: 'https://upload.wikimedia.org/wikipedia/commons/5/5d/Toyota_Tacoma_%28N300%29_TRD_1X7A2438.jpg',
         type: 'Large luggage ok',
       },
       price: 18,
       seatsLeft: 3,
     },
-    // ... more trip data
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
+    {
+      driver: {
+        name: 'Natalie',
+        image:
+          'https://w7.pngwing.com/pngs/627/97/png-transparent-avatar-web-development-computer-network-avatar-game-web-design-heroes.png',
+        rating: 4.5,
+        trips: 120,
+      },
+      trip: {
+        route: 'Vancouver to Victoria',
+        departure: 'Friday, March 8 at 3:30pm',
+        pickup: 'Vancouver, BC, Canada',
+        dropoff: 'Victoria, BC, Canada',
+      },
+      car: {
+        model: 'Toyota Tacoma',
+        type: 'Large luggage ok',
+      },
+      price: 18,
+      seatsLeft: 3,
+    },
   ];
 
+  const totalPages = Math.ceil(trips.length / tripsPerPage);
+  const indexOfLastTrip = currentPage * tripsPerPage;
+  const indexOfFirstTrip = indexOfLastTrip - tripsPerPage;
+  const currentTrips = trips.slice(indexOfFirstTrip, indexOfLastTrip);
+
   return (
-    <div className='min-h-screen bg-gray-100'>
+    <div className='min-h-screen bg-green-50'>
       <Navbar />
-      <div className='container px-4 py-8 mx-auto'>
-        <Searched />
+      <div className='container px-4 py-8 mt-12 mx-auto'>
         <div className='my-8'>
-          <h2 className='mb-2 text-2xl font-bold'>Results 1 to 5 from Vancouver to Victoria</h2>
-          <p className='mb-4 text-gray-600'>5 results total</p>
+          <h2 className='mb-2 text-2xl font-bold'>Results for Vancouver to Victoria</h2>
+          <p className='mb-4 text-gray-600'>{trips.length} results total</p>
           <h3 className='mb-4 text-xl font-semibold'>Friday, March 8</h3>
-          {trips.map((trip, index) => (
-            <TripCard key={index} {...trip} />
-          ))}
+          <div className='flex flex-wrap justify-between'>
+            {currentTrips.map((trip, index) => (
+              <TripCard key={index} {...trip} />
+            ))}
+          </div>
         </div>
         <div className='flex justify-center mt-8'>
-          <nav className='inline-flex rounded-md shadow'>
+          <nav className='inline-flex rounded-md shadow-xl'>
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              className='px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50'
+              className='px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-200'
+              disabled={currentPage === 1}
             >
               Previous
             </button>
@@ -171,8 +276,8 @@ const Travel = () => {
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-4 py-2 border border-gray-300 text-sm font-medium ${
-                  currentPage === i + 1 ? 'bg-primary text-white' : 'bg-white text-gray-500 hover:bg-gray-50'
+                className={`px-4 py-2 border border-gray-300 hover:bg-gray-100 text-sm font-medium ${
+                  currentPage === i + 1 ? 'bg-primary text-white' : 'bg-white text-gray-500 hover:bg-gray-200'
                 }`}
               >
                 {i + 1}
@@ -180,11 +285,15 @@ const Travel = () => {
             ))}
             <button
               onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              className='px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50'
+              className='px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-200'
+              disabled={currentPage === totalPages}
             >
               Next
             </button>
           </nav>
+        </div>
+        <div className='mt-12'>
+          <SearchNav />
         </div>
       </div>
       <CarpoolSection />

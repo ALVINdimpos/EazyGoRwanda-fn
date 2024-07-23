@@ -6,12 +6,12 @@ import { FaCarTunnel } from 'react-icons/fa6';
 import { PiNumberOneFill } from 'react-icons/pi';
 import { PiNumberTwoFill } from 'react-icons/pi';
 import { PiNumberThreeFill } from 'react-icons/pi';
-import ReliablePassengers from '../assets/ReliablePassengers.svg';
+import passangeOneImg from '../assets/passangeOneImg.png';
 const HowItWorksForDrivers = () => {
   return (
     <>
       <Navbar />
-      <div className='container p-6 mx-auto'>
+      <div className='container p-6 mt-14 mx-auto'>
         {/* For Drivers Section */}
         <div className='mb-12 text-center'>
           <div className='flex justify-center'>
@@ -53,7 +53,7 @@ const HowItWorksForDrivers = () => {
         <div className='flex justify-between p-6 bg-white'>
           <div className='mb-12 '>
             <h2 className='text-3xl font-bold'>Reliable passengers</h2>
-            <img src={ReliablePassengers} alt='' />
+            <img src={passangeOneImg} alt='' />
           </div>
           <div className='mt-5'>
             <div className='flex items-center'>
@@ -64,6 +64,21 @@ const HowItWorksForDrivers = () => {
             </div>
             <div className='mt-6'>
               <ul className='pl-8 text-lg list-disc'>
+                <li className='mb-2'>
+                  If a passenger cancels within 24 hours of departure, you get 50% of the payment.
+                </li>
+                <li className='mb-2'>
+                  If a passenger cancels within 24 hours of departure, you get 50% of the payment.
+                </li>
+                <li className='mb-2'>
+                  If a passenger cancels within 24 hours of departure, you get 50% of the payment.
+                </li>
+                <li className='mb-2'>
+                  If a passenger cancels within 24 hours of departure, you get 50% of the payment.
+                </li>
+                <li className='mb-2'>
+                  If a passenger cancels within 24 hours of departure, you get 50% of the payment.
+                </li>
                 <li className='mb-2'>
                   If a passenger cancels within 24 hours of departure, you get 50% of the payment.
                 </li>
